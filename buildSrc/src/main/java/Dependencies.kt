@@ -7,11 +7,8 @@ object Dependencies {
         val kotlinStdLib by lazy {
             "org.jetbrains.kotlin:kotlin-stdlib:${Versions.Kotlin.kotlinStdLib}"
         }
-        val kotlinCoroutinesCore by lazy {
-            "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.Kotlin.kotlinCoroutinesCore}"
-        }
-        val kotlinCoroutinesAndroid by lazy {
-            "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.Kotlin.kotlinCoroutinesCore}"
+        val kotlinReflect by lazy {
+            "org.jetbrains.kotlin:kotlin-reflect:${Versions.Kotlin.kotlinReflect}"
         }
 
         object Test {
@@ -46,6 +43,9 @@ object Dependencies {
         val materialDesign by lazy {
             "com.google.android.material:material:${Versions.Android.materialDesign}"
         }
+        val activity by lazy {
+            "androidx.activity:activity:${Versions.Android.activityVersion}"
+        }
         val fragment by lazy {
             "androidx.fragment:fragment-ktx:${Versions.Android.fragmentVersion}"
         }
@@ -61,17 +61,17 @@ object Dependencies {
     }
 
     object Coroutines {
-        val coroutinesAndroid by lazy {
-            "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1"
+        val kotlinCoroutinesCore by lazy {
+            "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.Kotlin.kotlinCoroutinesCore}"
+        }
+        val kotlinCoroutinesAndroid by lazy {
+            "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.Kotlin.kotlinCoroutinesCore}"
         }
         val kotlinCoroutinesAdapter by lazy {
             "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
         }
         val coroutinesTest by lazy {
             "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1"
-        }
-        val coroutinesCore by lazy {
-            "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1"
         }
     }
 
@@ -100,6 +100,12 @@ object Dependencies {
         }
     }
 
+    object Paging {
+        val paging by lazy {
+            "androidx.paging:paging-common-ktx:${Versions.Paging.paging}"
+        }
+    }
+
     object Navigation {
         val runTimeNavigation by lazy {
             "androidx.navigation:navigation-runtime-ktx:${Versions.Navigation.runTimeNavigation}"
@@ -117,7 +123,7 @@ object Dependencies {
     }
 
     object LifeCycle {
-        val runTimeLiveCycle by lazy {
+        val runTimeLifeCycle by lazy {
             "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.LifeCycle.runTimeLifeCycle}"
         }
         val lifeCycleCompiler by lazy {
@@ -128,6 +134,9 @@ object Dependencies {
         }
         val viewModel by lazy {
             "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.LifeCycle.viewModel}"
+        }
+        val lifeCycleCommon by lazy {
+            "androidx.lifecycle:lifecycle-common-java8:${Versions.LifeCycle.lifeCycleCommon}"
         }
     }
 
@@ -277,6 +286,30 @@ object Dependencies {
         }
         val chuckerNoOp by lazy {
             "com.github.chuckerteam.chucker:library-no-op:${Versions.Chucker.chuckerVersion}"
+        }
+    }
+
+    object Flexbox {
+        val flexbox by lazy {
+            "com.google.android.flexbox:flexbox:${Versions.Flexbox.flexbox}"
+        }
+    }
+
+    object Coil {
+        val coil by lazy {
+            "io.coil-kt:coil:${Versions.Coil.coilVersion}"
+        }
+        val coilSvg by lazy {
+            "io.coil-kt:coil-svg:${Versions.Coil.coilVersion}"
+        }
+    }
+
+    object ViewPager {
+        val viewPager by lazy {
+            "androidx.viewpager2:viewpager2:${Versions.ViewPager.viewPager}"
+        }
+        val viewPagerIndicator by lazy {
+            "me.relex:circleindicator:${Versions.ViewPager.viewPagerIndicator}"
         }
     }
 }

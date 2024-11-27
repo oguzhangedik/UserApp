@@ -5,22 +5,23 @@ plugins {
     id("org.jetbrains.kotlin.plugin.parcelize")
     id("androidx.navigation.safeargs")
     id("dagger.hilt.android.plugin")
+    id("com.google.devtools.ksp") version "1.9.21-1.0.15"
     id("kotlin-parcelize")
     id("org.sonarqube") version "4.4.1.3373"
 }
 
 android {
-    namespace = "com.example.userapp"
-    compileSdk = 35
+    namespace = Configs.nameSpace
+    compileSdk = Configs.compileSdkVersion
 
     defaultConfig {
-        applicationId = "com.example.userapp"
-        minSdk = 23
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        applicationId = Configs.applicationId
+        minSdk = Configs.minSdkVersion
+        targetSdk = Configs.targetSdkVersion
+        versionCode = Configs.versionCode
+        versionName = Configs.versionName
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = Configs.testInstrumentationRunner
     }
 
     buildTypes {
@@ -37,76 +38,114 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = JavaVersion.VERSION_11.toString()
     }
 }
 
 dependencies {
-    implementation(libs.androidx.activity)
 
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.22")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation(Dependencies.Kotlin.kotlinStdLib)
+    implementation(Dependencies.Kotlin.kotlinReflect)
 
     // Android
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
-    implementation("androidx.legacy:legacy-support-v4:1.0.0")
-    implementation("androidx.multidex:multidex:2.0.1")
-    implementation(libs.androidx.constraintlayout)
-    implementation("androidx.cardview:cardview:1.0.0")
+    implementation(Dependencies.Android.androidCore)
+    implementation(Dependencies.Android.androidCoreKtx)
+    implementation(Dependencies.Android.appCompat)
+    implementation(Dependencies.Android.legacySupport)
+    implementation(Dependencies.Android.multidex)
+    implementation(Dependencies.Android.materialDesign)
+    implementation(Dependencies.Android.activity)
+    implementation(Dependencies.Android.fragment)
+    implementation(Dependencies.Android.constraintLayout)
+    implementation(Dependencies.Android.cardView)
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-    implementation("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation(Dependencies.Coroutines.kotlinCoroutinesCore)
+    implementation(Dependencies.Coroutines.kotlinCoroutinesAndroid)
+    implementation(Dependencies.Coroutines.coroutinesTest)
+    implementation(Dependencies.Coroutines.kotlinCoroutinesAdapter)
 
-    // Dagger-Hilt
-    implementation("com.google.dagger:hilt-android:2.50")
-    implementation(libs.material)
-    kapt("com.google.dagger:hilt-compiler:2.50")
-
-    //Navigation
-    implementation("androidx.navigation:navigation-runtime-ktx:2.7.7")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
-    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+    // Navigation
+    implementation(Dependencies.Navigation.runTimeNavigation)
+    implementation(Dependencies.Navigation.navigationFragment)
+    implementation(Dependencies.Navigation.navigationUi)
+    implementation(Dependencies.Navigation.navigationDynamic)
 
     // LifeCycle
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
-    implementation("androidx.lifecycle:lifecycle-common-java8:2.7.0")
-
-    // Moshi
-    implementation("com.squareup.moshi:moshi-kotlin:1.15.1")
-
-    //Timber
-    implementation("com.jakewharton.timber:timber:5.0.1")
+    implementation(Dependencies.LifeCycle.runTimeLifeCycle)
+    implementation(Dependencies.LifeCycle.lifeCycleCompiler)
+    implementation(Dependencies.LifeCycle.liveData)
+    implementation(Dependencies.LifeCycle.viewModel)
+    implementation(Dependencies.LifeCycle.lifeCycleCommon)
 
     //DataStore
-    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation(Dependencies.DataStore.dataStore)
 
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    // Dagger-Hilt
+    implementation(Dependencies.DI.hilt)
+    kapt(Dependencies.DI.hiltCompiler)
 
-    //Flexbox
-    implementation("com.google.android.flexbox:flexbox:3.0.0")
+    // Network
+    implementation(Dependencies.Network.gson)
+    implementation(Dependencies.Network.gsonAdapter)
+    implementation(Dependencies.Network.retrofit)
+    implementation(Dependencies.Network.rxJavaAdapter)
+    implementation(Dependencies.Network.okHttp)
+    implementation(Dependencies.Network.loggingInterceptor)
+
+    // Moshi
+    implementation(Dependencies.Network.moshi)
+    implementation(Dependencies.Network.retrofitMoshi)
+
+    //JWT-Auth0
+    implementation(Dependencies.Network.jwt)
 
     // Glide
-    implementation("com.github.bumptech.glide:glide:4.13.0")
-    annotationProcessor("com.github.bumptech.glide:compiler:4.13.0")
+    implementation(Dependencies.Glide.glide)
+    annotationProcessor(Dependencies.Glide.glideCompiler)
 
-    //Coil (https://github.com/coil-kt/coil)
-    implementation("io.coil-kt:coil:2.5.0")
-    implementation("io.coil-kt:coil-svg:2.5.0")
+    //Timber
+    implementation(Dependencies.Tools.timber)
 
-    implementation("androidx.viewpager2:viewpager2:1.1.0")
-    implementation("me.relex:circleindicator:2.1.6")
+    // Testing
+    testImplementation(Dependencies.Test.junit)
+    testImplementation(Dependencies.Test.truthExt)
+    testImplementation(Dependencies.Test.mockK)
+    testImplementation(Dependencies.Test.coreTesting)
+    testImplementation(Dependencies.Test.androidJunit)
+    testImplementation(Dependencies.Test.espressoCore)
+    testImplementation(Dependencies.DI.hiltAndroidTesting)
+    implementation(Dependencies.Test.monitor)
+    implementation(Dependencies.Test.junitKtx)
+    androidTestImplementation(Dependencies.Test.testng)
+
+    // Dialog
+    implementation(Dependencies.Dialogs.dialogCore)
+    implementation(Dependencies.Dialogs.dateTime)
 
     // Room
     implementation(Dependencies.Room.runtime)
     kapt(Dependencies.Room.compiler)
+
+    // Paging
+    implementation(Dependencies.Paging.paging)
+
+    // Logto
+    implementation(Dependencies.Logto.logto)
+
+    //Chucker
+    debugImplementation(Dependencies.Chucker.chucker)
+    releaseImplementation(Dependencies.Chucker.chuckerNoOp)
+
+    //Flexbox
+    implementation(Dependencies.Flexbox.flexbox)
+
+    //Coil (https://github.com/coil-kt/coil)
+    implementation(Dependencies.Coil.coil)
+    implementation(Dependencies.Coil.coilSvg)
+
+    implementation(Dependencies.ViewPager.viewPager)
+    implementation(Dependencies.ViewPager.viewPagerIndicator)
+
 }
