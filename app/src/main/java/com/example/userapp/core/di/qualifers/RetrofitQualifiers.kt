@@ -12,7 +12,7 @@ annotation class ProjectOkHttpClient
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class RetrofitMainService
+annotation class RetrofitAppService
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)

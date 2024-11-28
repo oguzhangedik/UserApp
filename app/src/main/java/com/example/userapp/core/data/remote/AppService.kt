@@ -1,17 +1,18 @@
 package com.example.userapp.core.data.remote
 
-import com.example.userapp.core.data.dto.user.RandomUsers
+import com.example.userapp.core.data.dto.user.GithubUserResponse
+import com.example.userapp.core.netwok.resource.BaseApiResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
+import retrofit2.http.QueryMap
 
 interface AppService {
     object Api {
-        const val apiVersion = "api/"
+        const val searchGithubUsers = "search/users"
     }
-    @GET(Api.apiVersion)
-    suspend fun fetchUsers(
-        @Query("page") page: Int = 1,
-        @Query("results") results: Int = 10,
-    ): Response<RandomUsers>
+    @GET(Api.searchGithubUsers)
+    suspend fun searchGithubUsers(
+        @QueryMap queryParams: Map<String, String>
+    ): Response<BaseApiResponse<GithubUserResponse?>>
 }

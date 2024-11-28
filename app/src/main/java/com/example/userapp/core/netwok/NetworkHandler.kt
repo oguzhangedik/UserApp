@@ -19,19 +19,11 @@ object NetworkHandler {
                 response = request.invoke()
 
                 if (response.isSuccessful) {
-                    val isMetaResponseSuccess = response.body()?.meta?.success ?: false
-                    if (isMetaResponseSuccess) {
-                        send(
-                            Resource.success(
-                                data = response.body()?.data,
-                                meta = response.body()?.meta
-                            )
+                    send(
+                        Resource.success(
+                            data = response.body()?.data
                         )
-                    } else {
-                        send(
-                            response.defaultServerError()
-                        )
-                    }
+                    )
                 } else {
                     throw HttpException(response)
                 }
@@ -60,6 +52,5 @@ object NetworkHandler {
                 errorCode = this?.code() ?: -1,
                 message = this?.errorBody()?.string() ?: String.empty
             ),
-            meta = this?.body()?.meta
         )
 }

@@ -9,12 +9,11 @@ import com.example.userapp.core.common.dataStore.AppDataStore
 import com.example.userapp.core.di.qualifers.ProjectOkHttpClient
 import com.example.userapp.core.di.qualifers.ProjectOkHttpClientWithAuthentication
 import com.example.userapp.core.di.qualifers.RetrofitAuthService
-import com.example.userapp.core.di.qualifers.RetrofitMainService
+import com.example.userapp.core.di.qualifers.RetrofitAppService
 import com.example.userapp.core.netwok.MainRestHeadersInterceptor
 import com.example.userapp.core.netwok.interceptor.AuthenticationInterceptor
 import com.example.userapp.core.netwok.interceptor.HttpRequestInterceptor
 import com.example.userapp.core.netwok.retrofit.NetworkConfig
-import com.example.userapp.core.netwok.token.BaseTokenManager
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -55,10 +54,10 @@ object NetworkModule {
             .build()
     }
 
-    @RetrofitMainService
+    @RetrofitAppService
     @Provides
     @Singleton
-    fun provideRetrofitForMainService(
+    fun provideRetrofitForAppService(
         networkConfig: NetworkConfig,
         @ProjectOkHttpClientWithAuthentication okHttpClient: OkHttpClient,
         moshi: Moshi
@@ -114,13 +113,13 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideAuthenticationInterceptor(tokenManager: BaseTokenManager, appDataStore: AppDataStore): AuthenticationInterceptor =
-        AuthenticationInterceptor(tokenManager = tokenManager, appDataStore = appDataStore)
+    fun provideAuthenticationInterceptor(appDataStore: AppDataStore): AuthenticationInterceptor =
+        AuthenticationInterceptor(appDataStore = appDataStore)
 
     @Provides
     @Singleton
-    fun provideMainRestHeadersInterceptor(tokenManager: BaseTokenManager): MainRestHeadersInterceptor =
-        MainRestHeadersInterceptor(tokenManager = tokenManager)
+    fun provideMainRestHeadersInterceptor(): MainRestHeadersInterceptor =
+        MainRestHeadersInterceptor()
 
     @Provides
     @Singleton

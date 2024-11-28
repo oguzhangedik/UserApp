@@ -3,141 +3,39 @@ package com.example.userapp.core.data.dto.user
 
 import com.google.gson.annotations.SerializedName
 
-data class RandomUsers(
-    @SerializedName("info")
-    var info: Info,
-    @SerializedName("results")
-    var results: List<Result>
+data class GithubUserSearchRequest(
+    val textInUserNameToSearch: String = "A",
+    val page: Int = 1,
+    val perPageUserCount: Int = 10
+)
+
+data class GithubUserResponse(
+    @SerializedName("total_count") val totalCount: Int?,
+    @SerializedName("incomplete_results") val incompleteResults: Boolean?,
+    @SerializedName("items") val items: List<GithubUser>?
 ) {
-    data class Info(
-        @SerializedName("page")
-        var page: Int,
-        @SerializedName("results")
-        var results: Int,
-        @SerializedName("seed")
-        var seed: String,
-        @SerializedName("version")
-        var version: String
+    data class GithubUser(
+        @SerializedName("login") val login: String?,
+        @SerializedName("id") val id: Int?,
+        @SerializedName("node_id") val nodeId: String?,
+        @SerializedName("avatar_url") val avatarUrl: String?,
+        @SerializedName("gravatar_id") val gravatarId: String?,
+        @SerializedName("url") val url: String?,
+        @SerializedName("html_url") val htmlUrl: String?,
+        @SerializedName("followers_url") val followersUrl: String?,
+        @SerializedName("following_url") val followingUrl: String?,
+        @SerializedName("gists_url") val gistsUrl: String?,
+        @SerializedName("starred_url") val starredUrl: String?,
+        @SerializedName("subscriptions_url") val subscriptionsUrl: String?,
+        @SerializedName("organizations_url") val organizationsUrl: String?,
+        @SerializedName("repos_url") val reposUrl: String?,
+        @SerializedName("events_url") val eventsUrl: String?,
+        @SerializedName("received_events_url") val receivedEventsUrl: String?,
+        @SerializedName("type") val type: String?,
+        @SerializedName("user_view_type") val userViewType: String?,
+        @SerializedName("site_admin") val siteAdmin: Boolean?,
+        @SerializedName("score") val score: Double?
     )
-
-    data class Result(
-        @SerializedName("cell")
-        var cell: String,
-        @SerializedName("dob")
-        var dob: Dob,
-        @SerializedName("email")
-        var email: String,
-        @SerializedName("gender")
-        var gender: String,
-        @SerializedName("id")
-        var id: Id,
-        @SerializedName("location")
-        var location: Location,
-        @SerializedName("login")
-        var login: Login,
-        @SerializedName("name")
-        var name: Name,
-        @SerializedName("nat")
-        var nat: String,
-        @SerializedName("phone")
-        var phone: String,
-        @SerializedName("picture")
-        var picture: Picture,
-        @SerializedName("registered")
-        var registered: Registered
-    ) {
-        data class Dob(
-            @SerializedName("age")
-            var age: Int,
-            @SerializedName("date")
-            var date: String
-        )
-
-        data class Id(
-            @SerializedName("name")
-            var name: String,
-            @SerializedName("value")
-            var value: String
-        )
-
-        data class Location(
-            @SerializedName("city")
-            var city: String,
-            @SerializedName("coordinates")
-            var coordinates: Coordinates,
-            @SerializedName("country")
-            var country: String,
-            @SerializedName("postcode")
-            var postcode: Any,
-            @SerializedName("state")
-            var state: String,
-            @SerializedName("street")
-            var street: Street,
-            @SerializedName("timezone")
-            var timezone: Timezone
-        ) {
-            data class Coordinates(
-                @SerializedName("latitude")
-                var latitude: String,
-                @SerializedName("longitude")
-                var longitude: String
-            )
-
-            data class Street(
-                @SerializedName("name")
-                var name: String,
-                @SerializedName("number")
-                var number: Int
-            )
-
-            data class Timezone(
-                @SerializedName("description")
-                var description: String,
-                @SerializedName("offset")
-                var offset: String
-            )
-        }
-
-        data class Login(
-            @SerializedName("md5")
-            var md5: String,
-            @SerializedName("password")
-            var password: String,
-            @SerializedName("salt")
-            var salt: String,
-            @SerializedName("sha1")
-            var sha1: String,
-            @SerializedName("sha256")
-            var sha256: String,
-            @SerializedName("username")
-            var username: String,
-            @SerializedName("uuid")
-            var uuid: String
-        )
-
-        data class Name(
-            @SerializedName("first")
-            var first: String,
-            @SerializedName("last")
-            var last: String,
-            @SerializedName("title")
-            var title: String
-        )
-
-        data class Picture(
-            @SerializedName("large")
-            var large: String,
-            @SerializedName("medium")
-            var medium: String,
-            @SerializedName("thumbnail")
-            var thumbnail: String
-        )
-
-        data class Registered(
-            @SerializedName("age")
-            var age: Int,
-            @SerializedName("date")
-            var date: String
-        )
-    }
 }
+
+

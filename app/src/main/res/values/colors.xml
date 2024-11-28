@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="statusBarColor">@color/color242424</color>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#262460</color>
+    <color name="initialStatusBarColor">@color/transparent</color>
+    <color name="transparent">#0000</color>
+    <color name="color242424">#242424</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

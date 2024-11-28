@@ -1,7 +1,7 @@
 package com.example.userapp.core.utils
 
 object Constants {
-    const val BASE_URL = "https://randomuser.me/"
+    const val APP_BASE_URL = ""
 
     // Logto
     const val LOGTO_SIGN_CALLBACK = "tr.com.fatihylmz://callback"
