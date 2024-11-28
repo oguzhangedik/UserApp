@@ -4,7 +4,6 @@ import com.example.userapp.core.data.dto.user.GithubUserResponse
 import com.example.userapp.core.data.dto.user.GithubUserSearchRequest
 import com.example.userapp.core.data.remote.AppService
 
-import com.example.userapp.core.netwok.resource.BaseApiResponse
 
 import retrofit2.Response
 import retrofit2.http.QueryMap
@@ -16,7 +15,7 @@ class AppClient @Inject constructor(
 
     suspend fun searchGithubUsers(
         request: GithubUserSearchRequest
-    ): Response<BaseApiResponse<GithubUserResponse?>> {
+    ): Response<GithubUserResponse?> {
         val queryParams = mapOf(
             "q" to request.textInUserNameToSearch,
             "page" to request.page.toString(),

@@ -1,0 +1,44 @@
+package com.example.userapp.core.data.dto.user
+
+import android.os.Parcelable
+import com.squareup.moshi.Json
+import kotlinx.parcelize.Parcelize
+
+data class GithubUserSearchRequest(
+    val textInUserNameToSearch: String = "A",
+    val page: Int = 1,
+    val perPageUserCount: Int = 10
+)
+
+@Parcelize
+data class GithubUserResponse(
+    @Json(name = "total_count") val totalCount: Int?,
+    @Json(name = "incomplete_results") val incompleteResults: Boolean?,
+    @Json(name = "items") val items: List<GithubUser>?
+) : Parcelable
+
+@Parcelize
+data class GithubUser(
+    @Json(name = "login") val login: String?,
+    @Json(name = "id") val id: Int?,
+    @Json(name = "node_id") val nodeId: String?,
+    @Json(name = "avatar_url") val avatarUrl: String?,
+    @Json(name = "gravatar_id") val gravatarId: String?,
+    @Json(name = "url") val url: String?,
+    @Json(name = "html_url") val htmlUrl: String?,
+    @Json(name = "followers_url") val followersUrl: String?,
+    @Json(name = "following_url") val followingUrl: String?,
+    @Json(name = "gists_url") val gistsUrl: String?,
+    @Json(name = "starred_url") val starredUrl: String?,
+    @Json(name = "subscriptions_url") val subscriptionsUrl: String?,
+    @Json(name = "organizations_url") val organizationsUrl: String?,
+    @Json(name = "repos_url") val reposUrl: String?,
+    @Json(name = "events_url") val eventsUrl: String?,
+    @Json(name = "received_events_url") val receivedEventsUrl: String?,
+    @Json(name = "type") val type: String?,
+    @Json(name = "user_view_type") val userViewType: String?,
+    @Json(name = "site_admin") val siteAdmin: Boolean?,
+    @Json(name = "score") val score: Double?
+) : Parcelable
+
+

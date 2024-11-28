@@ -3,7 +3,6 @@ package com.example.userapp.core.netwok
 import com.example.userapp.core.extensions.JsonSerializer.toObject
 import com.example.userapp.core.extensions.StringExtensions.empty
 import com.example.userapp.core.netwok.data.Resource
-import com.example.userapp.core.netwok.resource.BaseApiResponse
 import com.example.userapp.core.netwok.resource.ErrorResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
@@ -12,16 +11,16 @@ import retrofit2.Response
 import java.net.UnknownHostException
 
 object NetworkHandler {
-    inline fun <T> handleResponse(crossinline request: suspend () -> Response<BaseApiResponse<T>>): Flow<Resource<T>> =
+    inline fun <T> handleResponse(crossinline request: suspend () -> Response<T>): Flow<Resource<T>> =
         channelFlow {
-            var response: Response<BaseApiResponse<T>>? = null
+            var response: Response<T>? = null
             try {
                 response = request.invoke()
 
                 if (response.isSuccessful) {
                     send(
                         Resource.success(
-                            data = response.body()?.data
+                            data = response.body()
                         )
                     )
                 } else {
@@ -46,7 +45,7 @@ object NetworkHandler {
             }
         }
 
-    fun <T> Response<BaseApiResponse<T>>?.defaultServerError(): Resource<T> =
+    fun <T> Response<T>?.defaultServerError(): Resource<T> =
         Resource.error(
             error = this?.errorBody()?.string()?.toObject() ?: ErrorResponse(
                 errorCode = this?.code() ?: -1,
