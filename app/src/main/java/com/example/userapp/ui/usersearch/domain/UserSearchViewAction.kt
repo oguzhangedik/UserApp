@@ -16,4 +16,6 @@ sealed class UserSearchViewAction : AppViewAction {
         val githubUsers : ArrayList<BaseListItemOfGithubUser>? = null
     ) : UserSearchViewAction()
 
+    data class OnSearchNewGithubUsers(val searchText : String
+    ) : UserSearchViewAction()
 }

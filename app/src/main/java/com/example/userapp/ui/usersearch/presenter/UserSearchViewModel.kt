@@ -18,11 +18,13 @@ import com.example.userapp.ui.usersearch.domain.UserSearchActionState
 import com.example.userapp.ui.usersearch.domain.UserSearchViewAction
 import com.example.userapp.ui.usersearch.domain.UserSearchViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.delay
 
 @HiltViewModel
 class UserSearchViewModel @Inject constructor(
@@ -34,10 +36,14 @@ class UserSearchViewModel @Inject constructor(
     val userSearchViewState: UserSearchViewState
         get() = state as UserSearchViewState
 
-    fun searchGithubUsers(textInUserNameToSearch: String) {
-        viewModelScope.launch(coroutine) {
+    private var userSearchDebounceJob: Job? = null
+    private var searchTextDebounceJob: Job? = null
+
+    fun searchGithubUsers() {
+        userSearchDebounceJob?.cancel()
+        userSearchDebounceJob = viewModelScope.launch(coroutine) {
             setLoading(true)
-            val newSearchRequest = generateNextPageUserSearchRequest(textInUserNameToSearch)
+            val newSearchRequest = generateNextPageUserSearchRequest(userSearchViewState.searchText)
             localRepository.getByUserSearchRequestParams(newSearchRequest)
                 .firstOrNull()?.let { dbUserSearchRequest ->
                     val githubUsersFromDb =
@@ -82,12 +88,23 @@ class UserSearchViewModel @Inject constructor(
                     userSearchActionState = UserSearchActionState.GET_GITHUB_USERS
                 )
             }
+
             is UserSearchViewAction.OnLoadMoreGithubUsers -> {
                 userSearchViewState.copy(
                     uiState = UiState.SUCCESS,
                     githubUserSearchRequest = action.githubUserSearchRequest,
                     githubUsers = action.githubUsers,
                     userSearchActionState = UserSearchActionState.LOAD_MORE_GITHUB_USERS
+                )
+            }
+
+            is UserSearchViewAction.OnSearchNewGithubUsers -> {
+                userSearchViewState.copy(
+                    uiState = UiState.SUCCESS,
+                    searchText = action.searchText,
+                    githubUserSearchRequest = null,
+                    githubUsers = null,
+                    userSearchActionState = UserSearchActionState.SEARCH_NEW_GITHUB_USERS
                 )
             }
         }
@@ -103,15 +120,20 @@ class UserSearchViewModel @Inject constructor(
         )
     }
 
-    private fun mapGithubUserListAndSendAction(newRequest : GithubUserSearchRequest, newGithubUsers : ArrayList<GithubUser>) {
+    private fun mapGithubUserListAndSendAction(
+        newRequest: GithubUserSearchRequest,
+        newGithubUsers: ArrayList<GithubUser>
+    ) {
         if (userSearchViewState.githubUserSearchRequest == null
-            && userSearchViewState.githubUsers == null) {
+            && userSearchViewState.githubUsers == null
+        ) {
             val githubUserListItems = ArrayList<BaseListItemOfGithubUser>(newGithubUsers)
             if (githubUserListItems.isEmpty()) {
                 githubUserListItems.add(NoItemOfGithubUser())
-            } else {
+            } else if (newGithubUsers.size == 30) {
                 githubUserListItems.add(ProgressItemOfGithubUser())
             }
+
             sendAction(
                 viewAction = UserSearchViewAction.OnGithubUsers(
                     githubUserSearchRequest = newRequest,
@@ -119,20 +141,39 @@ class UserSearchViewModel @Inject constructor(
                 )
             )
         } else {
-            safeLet(userSearchViewState.githubUserSearchRequest,
-                userSearchViewState.githubUsers) { currentRequest, currentGithubUsers ->
+            safeLet(
+                userSearchViewState.githubUserSearchRequest,
+                userSearchViewState.githubUsers
+            ) { currentRequest, currentGithubUsers ->
                 val stateGithubUserList = currentGithubUsers.filterIsInstance<GithubUser>()
                 val githubUserListItems = ArrayList<BaseListItemOfGithubUser>()
                 githubUserListItems.addAll(stateGithubUserList)
                 githubUserListItems.addAll(newGithubUsers)
-                githubUserListItems.add(ProgressItemOfGithubUser())
-
+                if (newGithubUsers.size == 30) {
+                    githubUserListItems.add(ProgressItemOfGithubUser())
+                }
                 sendAction(
                     viewAction = UserSearchViewAction.OnLoadMoreGithubUsers(
                         githubUserSearchRequest = newRequest,
                         githubUsers = githubUserListItems
                     )
                 )
+            }
+        }
+    }
+
+    fun updateSearchText(newText: String) {
+        searchTextDebounceJob?.cancel()
+        searchTextDebounceJob = viewModelScope.launch {
+            delay(2000L)
+            newText.trim().let {
+                if (it.isNotEmpty() && it.isNotBlank()) {
+                    sendAction(
+                        viewAction = UserSearchViewAction.OnSearchNewGithubUsers(
+                            searchText = it
+                        )
+                    )
+                }
             }
         }
     }

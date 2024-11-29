@@ -1,6 +1,7 @@
 package com.example.userapp.ui.usersearch.presenter
 
-import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import androidx.activity.addCallback
@@ -31,15 +32,13 @@ class UserSearchFragment : BaseFragment<FragmentUserSearchBinding>(
     override fun initView() {
         setStatusBarColor(R.color.statusBarColor)
         observeData()
+        binding.viewModel = viewModel
         setupRecyclerView()
-
+        setupSearchEditText()
         // Geri butonuna basıldığında
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             goBack()
         }
-
-        viewModel.searchGithubUsers("A")
-
     }
 
     private fun goBack() {
@@ -66,6 +65,9 @@ class UserSearchFragment : BaseFragment<FragmentUserSearchBinding>(
                             githubUserAdapter?.updateData(mappedUserList)
                             isLoading = false
                         }
+                    }
+                    UserSearchActionState.SEARCH_NEW_GITHUB_USERS -> {
+                        viewModel.searchGithubUsers()
                     }
                 }
             }
@@ -99,6 +101,25 @@ class UserSearchFragment : BaseFragment<FragmentUserSearchBinding>(
 
     private fun loadMoreData() {
         Log.d("loadMoreData", "loadMoreData: ")
-        viewModel.searchGithubUsers("A")
+        viewModel.searchGithubUsers()
+    }
+
+    private fun setupSearchEditText() {
+        // Tüm önceki TextWatcher'ları kaldır
+        binding.searchEditText.removeTextChangedListener(null)
+        // TextWatcher ile EditText'i dinle
+        binding.searchEditText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                val text = s?.toString()?.trim() ?: ""
+                // Harf ve rakam validasyonu yap, sadece A-Z, a-z, 0-9, ve boşluk
+                val filteredText = text.replace("[^a-zA-Z0-9\\s]".toRegex(), "")
+                // Text gecikmeli olarak ViewModel'e gönder
+                viewModel.updateSearchText(filteredText)
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
     }
 }

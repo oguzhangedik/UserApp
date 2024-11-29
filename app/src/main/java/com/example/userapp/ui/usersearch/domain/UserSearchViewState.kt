@@ -9,6 +9,8 @@ import com.example.userapp.model.UiState
 data class UserSearchViewState(
     val userSearchActionState: UserSearchActionState = UserSearchActionState.NULL,
 
+    var searchText : String = "",
+
     val githubUserSearchRequest: GithubUserSearchRequest? = null,
     val githubUsers : ArrayList<BaseListItemOfGithubUser>? = null,
 
