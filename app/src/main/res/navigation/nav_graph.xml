@@ -9,6 +9,17 @@
     <fragment
         android:id="@+id/searchUserFragment"
         android:name="com.example.userapp.ui.usersearch.presenter.UserSearchFragment"
-        tools:layout="@layout/fragment_user_search" />
+        tools:layout="@layout/fragment_user_search">
+
+        <action
+            android:id="@+id/action_searchUserFragment_to_userDetailFragment"
+            app:destination="@id/userDetailFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/userDetailFragment"
+        android:name="com.example.userapp.ui.userdetail.presenter.UserDetailFragment"
+        tools:layout="@layout/fragment_user_detail" />
 
 </navigation>

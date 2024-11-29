@@ -59,7 +59,9 @@ class UserSearchFragment : BaseFragment<FragmentUserSearchBinding>(
                                 override fun onUserClicked(itemView: View?, favoriteView: View?, githubUser: GithubUser?) {
                                     itemView?.delayClick()
                                     favoriteView?.delayClick()
-                                    Log.d("CLICKTEST","onUserClicked")
+                                    val action =
+                                        UserSearchFragmentDirections.actionSearchUserFragmentToUserDetailFragment()
+                                    findNavController().navigate(action)
                                 }
 
                                 override fun onUserFavoriteButtonClicked(itemView: View?, favoriteView: View?, githubUser: GithubUser?) {
