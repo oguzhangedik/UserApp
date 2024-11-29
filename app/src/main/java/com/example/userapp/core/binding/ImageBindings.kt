@@ -19,6 +19,15 @@ fun ImageView.imageURL(image: Any) {
 fun ImageView.imageURL(url: String) {
     Glide.with(this.context).load(url).into(this)
 }
+
+@BindingAdapter("app:roundImageUrl")
+fun ImageView.roundImageUrl(url: String) {
+    Glide.with(this.context)
+        .load(url)
+        .circleCrop()
+        .into(this)
+}
+
 @BindingAdapter("app:imageUrlRadius")
 fun ImageView.imageURLRadius(url: String?) {
     url?.let { imageUrl ->

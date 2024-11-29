@@ -15,10 +15,23 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="80dp"
     android:background="@color/red"
     android:layout_marginTop="8dp"
     android:onClick="@{(view) -> listener.onUserClicked(view, data)}">
+
+    <ImageView
+        android:id="@+id/userImageView"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:contentDescription="@null"
+        app:roundImageUrl="@{data.avatarUrl}"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="16dp"/>
 
     <TextView
         android:layout_width="wrap_content"
