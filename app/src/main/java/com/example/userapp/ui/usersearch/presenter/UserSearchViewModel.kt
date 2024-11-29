@@ -37,6 +37,7 @@ class UserSearchViewModel @Inject constructor(
         get() = state as UserSearchViewState
 
     private var userSearchDebounceJob: Job? = null
+    private var userFavoriteUpdateDebounceJob: Job? = null
     private var searchTextDebounceJob: Job? = null
 
     fun searchGithubUsers() {
@@ -104,7 +105,19 @@ class UserSearchViewModel @Inject constructor(
                     searchText = action.searchText,
                     githubUserSearchRequest = null,
                     githubUsers = null,
+                    lastFavoriteUpdateGithubUser = null,
                     userSearchActionState = UserSearchActionState.SEARCH_NEW_GITHUB_USERS
+                )
+            }
+
+            is UserSearchViewAction.OnGithubUserFavoriteStateUpdate -> {
+                userSearchViewState.copy(
+                    uiState = UiState.SUCCESS,
+                    lastFavoriteUpdateGithubUser = action.githubUser,
+                    userSearchActionState =
+                    if(action.githubUser.isFavorite == true)
+                        UserSearchActionState.UPDATE_GITHUB_USER_TO_FAVORITE_STATE
+                    else UserSearchActionState.UPDATE_GITHUB_USER_TO_UNFAVORITE_STATE
                 )
             }
         }
@@ -174,6 +187,18 @@ class UserSearchViewModel @Inject constructor(
                         )
                     )
                 }
+            }
+        }
+    }
+
+    fun updateGithubUserFavoriteState(githubUser: GithubUser?){
+        githubUser?.let {
+            userFavoriteUpdateDebounceJob?.cancel()
+            userFavoriteUpdateDebounceJob = viewModelScope.launch(coroutine) {
+                githubUser.isFavorite = githubUser.isFavorite != true
+                localRepository.updateGithubUser(it)
+                sendAction(viewAction = UserSearchViewAction
+                    .OnGithubUserFavoriteStateUpdate(githubUser = githubUser))
             }
         }
     }

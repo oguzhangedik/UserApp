@@ -14,7 +14,9 @@ import com.example.userapp.adapter.GithubUserAdapter
 import com.example.userapp.core.data.dto.user.GithubUser
 import com.example.userapp.core.data.dto.user.GithubUserItemClickListener
 import com.example.userapp.core.extensions.observe
+import com.example.userapp.core.extensions.safeLet
 import com.example.userapp.core.platform.BaseFragment
+import com.example.userapp.core.utils.delayClick
 import com.example.userapp.databinding.FragmentUserSearchBinding
 import com.example.userapp.ui.usersearch.domain.UserSearchActionState
 import com.example.userapp.ui.usersearch.domain.UserSearchViewState
@@ -54,7 +56,16 @@ class UserSearchFragment : BaseFragment<FragmentUserSearchBinding>(
                         githubUsers?.let { mappedUserList ->
                             githubUserAdapter = GithubUserAdapter(mappedUserList,
                             object : GithubUserItemClickListener {
-                                override fun onUserClicked(view: View?, githubUser: GithubUser?) {
+                                override fun onUserClicked(itemView: View?, favoriteView: View?, githubUser: GithubUser?) {
+                                    itemView?.delayClick()
+                                    favoriteView?.delayClick()
+                                    Log.d("CLICKTEST","onUserClicked")
+                                }
+
+                                override fun onUserFavoriteButtonClicked(itemView: View?, favoriteView: View?, githubUser: GithubUser?) {
+                                    itemView?.delayClick()
+                                    favoriteView?.delayClick()
+                                    viewModel.updateGithubUserFavoriteState(githubUser)
                                 }
                             })
                             binding.githubUserRecyclerView.adapter = githubUserAdapter
@@ -68,6 +79,15 @@ class UserSearchFragment : BaseFragment<FragmentUserSearchBinding>(
                     }
                     UserSearchActionState.SEARCH_NEW_GITHUB_USERS -> {
                         viewModel.searchGithubUsers()
+                    }
+                    UserSearchActionState.UPDATE_GITHUB_USER_TO_FAVORITE_STATE,
+                    UserSearchActionState.UPDATE_GITHUB_USER_TO_UNFAVORITE_STATE-> {
+                        safeLet(githubUsers, lastFavoriteUpdateGithubUser)
+                        { mappedUserList, updatedGithubUser ->
+                            val positionOfUpdatedGithubUser =
+                                mappedUserList.indexOf(updatedGithubUser)
+                            githubUserAdapter?.notifyItemChanged(positionOfUpdatedGithubUser)
+                        }
                     }
                 }
             }

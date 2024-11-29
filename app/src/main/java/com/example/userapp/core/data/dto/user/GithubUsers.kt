@@ -62,7 +62,8 @@ class ProgressItemOfGithubUser : BaseListItemOfGithubUser()
 open class BaseListItemOfGithubUser : Parcelable
 
 interface GithubUserItemClickListener {
-    fun onUserClicked(view : View?, githubUser: GithubUser?)
+    fun onUserClicked(itemView: View?, favoriteView: View?, githubUser: GithubUser?)
+    fun onUserFavoriteButtonClicked(itemView: View?, favoriteView: View?, githubUser: GithubUser?)
 }
 
 

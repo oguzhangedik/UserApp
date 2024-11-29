@@ -61,28 +61,7 @@ class LocalDataImpl @Inject constructor(
         return githubUserDao.insertGithubUsers(githubUsers)
     }
 
-    override fun doLogin(loginRequest: LoginRequest): Result<LoginResponse> {
-        if (loginRequest.isExist(LoginRequest("Albedo426", "123123"))) {
-            return Result.Success(
-                LoginResponse(
-                    "1",
-                    "fatih",
-                    "Yilmaz",
-                    "fatikyilmaz@hotmail.com",
-                    "testtoken"
-                )
-            )
-        }
-        return Result.Error(
-            ErrorMapper.getError(
-                NullPointerException()
-            )
-        )
-    }
-
-    override fun doTest(): Result<List<String>> {
-        return Result.Success(
-            listOf("a", "b", "c", "d", "e", "f", "g", "i")
-        )
+    override suspend fun updateGithubUser(githubUser: GithubUser) {
+        githubUserDao.update(githubUser)
     }
 }

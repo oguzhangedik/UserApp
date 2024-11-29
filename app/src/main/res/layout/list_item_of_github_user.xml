@@ -14,11 +14,12 @@
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/githubUserLayout"
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:background="@drawable/user_list_item_layout_bg"
     android:layout_marginTop="8dp"
-    android:onClick="@{(view) -> listener.onUserClicked(view, data)}">
+    android:onClick="@{(view) -> listener.onUserClicked(view, userImageView, data)}">
 
     <ImageView
         android:id="@+id/userImageView"
@@ -45,6 +46,17 @@
         android:textStyle="bold"
         android:textSize="20sp"
         android:text="@{data.login}"/>
+
+    <ImageView
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="16dp"
+        tools:src="@drawable/favorite_icon"
+        setUserListItemFavoriteImage="@{data}"
+        android:onClick="@{(view) -> listener.onUserFavoriteButtonClicked(githubUserLayout, view, data)}"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,6 +1,7 @@
 package com.example.userapp.ui.usersearch.domain
 
 import com.example.userapp.core.data.dto.user.BaseListItemOfGithubUser
+import com.example.userapp.core.data.dto.user.GithubUser
 import com.example.userapp.core.data.dto.user.GithubUserSearchRequest
 import com.example.userapp.core.platform.viewmodel.AppViewAction
 
@@ -17,5 +18,8 @@ sealed class UserSearchViewAction : AppViewAction {
     ) : UserSearchViewAction()
 
     data class OnSearchNewGithubUsers(val searchText : String
+    ) : UserSearchViewAction()
+
+    data class OnGithubUserFavoriteStateUpdate(val githubUser: GithubUser
     ) : UserSearchViewAction()
 }
