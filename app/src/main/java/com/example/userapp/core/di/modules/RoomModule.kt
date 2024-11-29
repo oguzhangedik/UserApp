@@ -3,6 +3,8 @@ package com.example.userapp.core.di.modules
 import android.content.Context
 import androidx.room.Room
 import com.example.userapp.core.data.room.AppDatabase
+import com.example.userapp.core.data.room.dao.GithubUserDao
+import com.example.userapp.core.data.room.dao.GithubUserSearchRequestDao
 import com.example.userapp.core.data.room.dao.UserDao
 import dagger.Module
 import dagger.Provides
@@ -29,4 +31,13 @@ object RoomModule {
     @Provides
     fun provideUserDao(db: AppDatabase): UserDao = db.UserDao()
 
+    @Singleton
+    @Provides
+    fun provideGithubUserSearchRequestDao(db: AppDatabase)
+    : GithubUserSearchRequestDao = db.GithubUserSearchRequestDao()
+
+    @Singleton
+    @Provides
+    fun provideGithubUserDao(db: AppDatabase)
+    : GithubUserDao = db.GithubUserDao()
 }

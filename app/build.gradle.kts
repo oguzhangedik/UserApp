@@ -135,6 +135,7 @@ dependencies {
 
     // Room
     implementation(Dependencies.Room.runtime)
+    implementation(Dependencies.Room.ktx)
     kapt(Dependencies.Room.compiler)
 
     // Paging

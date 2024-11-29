@@ -1,14 +1,20 @@
 package com.example.userapp.core.data.dto.user
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
+@Entity
 data class GithubUserSearchRequest(
     val textInUserNameToSearch: String = "A",
     val page: Int = 1,
-    val perPageUserCount: Int = 10
-)
+    val perPageUserCount: Int = 30
+) {
+    @PrimaryKey(autoGenerate = true) var dbId: Long = 0
+}
 
 @Parcelize
 data class GithubUserResponse(
@@ -17,8 +23,9 @@ data class GithubUserResponse(
     @Json(name = "items") val items: List<GithubUser>?
 ) : Parcelable
 
+@Entity
 @Parcelize
-data class GithubUser(
+    data class GithubUser(
     @Json(name = "login") val login: String?,
     @Json(name = "id") val id: Int?,
     @Json(name = "node_id") val nodeId: String?,
@@ -39,6 +46,12 @@ data class GithubUser(
     @Json(name = "user_view_type") val userViewType: String?,
     @Json(name = "site_admin") val siteAdmin: Boolean?,
     @Json(name = "score") val score: Double?
-) : Parcelable
+) : Parcelable {
+    @PrimaryKey(autoGenerate = true) var dbId: Long = 0
+
+    var searchRequestDbId: Long = 0
+
+    var isFavorite : Boolean? = false
+}
 
 

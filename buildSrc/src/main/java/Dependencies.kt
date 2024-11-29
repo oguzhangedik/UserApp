@@ -95,6 +95,9 @@ object Dependencies {
         val runtime by lazy {
             "androidx.room:room-runtime:${Versions.Room.room}"
         }
+        val ktx by lazy {
+            "androidx.room:room-ktx:${Versions.Room.room}"
+        }
         val compiler by lazy {
             "androidx.room:room-compiler:${Versions.Room.room}"
         }

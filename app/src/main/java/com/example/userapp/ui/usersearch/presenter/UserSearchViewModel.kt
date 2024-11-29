@@ -11,7 +11,6 @@ import com.example.userapp.core.platform.viewmodel.AppViewState
 import com.example.userapp.ui.usersearch.domain.UserSearchViewAction
 import com.example.userapp.ui.usersearch.domain.UserSearchViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,14 +26,42 @@ class UserSearchViewModel @Inject constructor(
     fun searchGithubUsers() {
         viewModelScope.launch(coroutine) {
             setLoading(true)
-            val searchUserResponse = githubUserUseCase.searchGithubUsers(
-                request = GithubUserSearchRequest()
-            ).first()
-            setLoading(false)
-            if (searchUserResponse.status == Status.SUCCESS) {
-                showInfoMessage("success")
-            } else {
-                showCustomError("hata")
+
+            val newSearchRequest = GithubUserSearchRequest()
+
+            localRepository.getByUserSearchRequestParams(newSearchRequest)
+                .firstOrNull()?.let { dbUserSearchRequest ->
+                // direk db den getir diycez ama simdi test ediyoruz
+               val githubUsersFromDb =
+                   localRepository.getGithubUsersBySearchRequestDbId(dbUserSearchRequest.dbId)
+               githubUsersFromDb
+               showInfoMessage("direk db den")
+               setLoading(false)
+            } ?: run {
+               val searchUserResponse = githubUserUseCase.searchGithubUsers(
+                   request = newSearchRequest
+               ).first()
+               if (searchUserResponse.status == Status.SUCCESS) {
+                   searchUserResponse.data?.items?.let { githubUsers ->
+                       val newDbUserSearchRequestDbId
+                       = localRepository.insertGithubUserSearchRequest(newSearchRequest)
+                       githubUsers.forEach { githubUser
+                           ->  githubUser.searchRequestDbId = newDbUserSearchRequestDbId
+                       }
+                       val githubUsersDbIds = localRepository.insertGithubUsers(githubUsers)
+
+                       for (i in githubUsers.indices) {
+                           githubUsers[i].dbId = githubUsersDbIds[i]
+                       }
+
+                       showInfoMessage("success")
+                   }
+                   showInfoMessage("successssss")
+                   setLoading(false)
+               } else {
+                   showCustomError("hata")
+                   setLoading(false)
+               }
             }
         }
     }

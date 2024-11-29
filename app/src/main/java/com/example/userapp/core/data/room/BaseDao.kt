@@ -9,13 +9,13 @@ import androidx.room.Update
 abstract class BaseDao<T> {
 
     @Insert
-    abstract fun insert(obj: T)
+    abstract suspend fun insert(obj: T) : Long
     @Insert
-    abstract fun insert(vararg obj: T)
+    abstract suspend fun insert(vararg obj: T)
 
     @Update
-    abstract fun update(obj: T)
+    abstract suspend fun update(obj: T)
 
     @Delete
-    abstract fun delete(obj: T)
+    abstract suspend fun delete(obj: T)
 }
