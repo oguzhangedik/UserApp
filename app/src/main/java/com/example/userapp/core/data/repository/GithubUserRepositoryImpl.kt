@@ -2,6 +2,8 @@ package com.example.userapp.core.data.repository
 
 import androidx.annotation.WorkerThread
 import com.example.userapp.core.data.dto.error.ErrorMapper
+import com.example.userapp.core.data.dto.user.GithubUserDetail
+import com.example.userapp.core.data.dto.user.GithubUserDetailRequest
 import com.example.userapp.core.data.dto.user.GithubUserResponse
 import com.example.userapp.core.data.dto.user.GithubUserSearchRequest
 import com.example.userapp.core.netwok.Network
@@ -33,6 +35,13 @@ class GithubUserRepositoryImpl @Inject constructor(
 
             else -> Result.Error(null)
         }*/
+    }
+
+    @WorkerThread
+    override suspend fun githubUserDetail(request: GithubUserDetailRequest): Flow<Resource<GithubUserDetail?>> {
+       return handleResponse {
+           appClient.githubUserDetail(request)
+       }
     }
 
     private suspend fun processCall(responseCall: suspend () -> Response<*>): Any? {

@@ -36,13 +36,10 @@ class UserSearchViewModel @Inject constructor(
     val userSearchViewState: UserSearchViewState
         get() = state as UserSearchViewState
 
-    private var userSearchDebounceJob: Job? = null
-    private var userFavoriteUpdateDebounceJob: Job? = null
     private var searchTextDebounceJob: Job? = null
 
     fun searchGithubUsers() {
-        userSearchDebounceJob?.cancel()
-        userSearchDebounceJob = viewModelScope.launch(coroutine) {
+        viewModelScope.launch(coroutine) {
             setLoading(true)
             val newSearchRequest = generateNextPageUserSearchRequest(userSearchViewState.searchText)
             localRepository.getByUserSearchRequestParams(newSearchRequest)
@@ -193,8 +190,7 @@ class UserSearchViewModel @Inject constructor(
 
     fun updateGithubUserFavoriteState(githubUser: GithubUser?){
         githubUser?.let {
-            userFavoriteUpdateDebounceJob?.cancel()
-            userFavoriteUpdateDebounceJob = viewModelScope.launch(coroutine) {
+            viewModelScope.launch(coroutine) {
                 githubUser.isFavorite = githubUser.isFavorite != true
                 localRepository.updateGithubUser(it)
                 sendAction(viewAction = UserSearchViewAction

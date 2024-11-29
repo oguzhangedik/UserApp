@@ -5,6 +5,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.userapp.R
 import com.example.userapp.core.extensions.observe
+import com.example.userapp.core.extensions.safeLet
 import com.example.userapp.core.platform.BaseFragment
 import com.example.userapp.databinding.FragmentUserDetailBinding
 import com.example.userapp.ui.userdetail.domain.UserDetailActionState
@@ -21,6 +22,8 @@ class UserDetailFragment : BaseFragment<FragmentUserDetailBinding>(
     override fun initView() {
         setStatusBarColor(R.color.statusBarColor)
         observeData()
+        val userDetailArgs = UserDetailFragmentArgs.fromBundle(requireArguments())
+        viewModel.githubUserDetail(userDetailArgs.githubUser)
 
         // Geri butonuna basıldığında
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
@@ -37,6 +40,11 @@ class UserDetailFragment : BaseFragment<FragmentUserDetailBinding>(
             with(viewState as UserDetailViewState) {
                 when (userDetailActionState) {
                     UserDetailActionState.NULL -> Unit
+                    UserDetailActionState.GET_GITHUB_USER_DETAIL -> {
+                        safeLet(githubUser, githubUserDetail) { _,_ ->
+
+                        }
+                    }
 
                 }
             }

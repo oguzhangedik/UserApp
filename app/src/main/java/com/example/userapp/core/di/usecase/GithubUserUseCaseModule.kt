@@ -2,6 +2,8 @@ package com.example.userapp.core.di.usecase
 
 import com.example.userapp.core.data.local.LocalData
 import com.example.userapp.core.data.repository.GithubUserRepository
+import com.example.userapp.core.data.usecase.githubuser.GithubUserDetailUseCase
+import com.example.userapp.core.data.usecase.githubuser.GithubUserDetailUseCaseImpl
 import com.example.userapp.core.data.usecase.githubuser.GithubUserUseCase
 import com.example.userapp.core.data.usecase.githubuser.GithubUserUseCaseImpl
 import dagger.Module
@@ -20,5 +22,14 @@ object GithubUserUseCaseModule {
         coroutine: CoroutineContext
     ): GithubUserUseCase {
         return GithubUserUseCaseImpl(githubUserRepository, localRepository, coroutine)
+    }
+
+    @Provides
+    fun provideGithubUserDetailUseCase(
+        githubUserRepository: GithubUserRepository,
+        localRepository: LocalData,
+        coroutine: CoroutineContext
+    ): GithubUserDetailUseCase {
+        return GithubUserDetailUseCaseImpl(githubUserRepository, localRepository, coroutine)
     }
 }
