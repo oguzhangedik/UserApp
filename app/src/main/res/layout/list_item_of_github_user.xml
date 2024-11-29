@@ -16,7 +16,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="80dp"
-    android:background="@color/red"
+    android:background="@drawable/user_list_item_layout_bg"
     android:layout_marginTop="8dp"
     android:onClick="@{(view) -> listener.onUserClicked(view, data)}">
 

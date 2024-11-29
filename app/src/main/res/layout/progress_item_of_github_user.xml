@@ -12,8 +12,8 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:background="@color/orange"
+    android:layout_height="80dp"
+    android:background="@drawable/user_progress_item_layout_bg"
     android:layout_marginTop="8dp">
 
     <ProgressBar

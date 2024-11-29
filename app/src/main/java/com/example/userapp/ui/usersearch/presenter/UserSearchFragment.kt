@@ -79,6 +79,8 @@ class UserSearchFragment : BaseFragment<FragmentUserSearchBinding>(
     private val visibleThreshold = 5  // Son 5 elemandan önce yükleme yapılacak
 
     private fun setupRecyclerView() {
+        binding.githubUserRecyclerView.setHasFixedSize(true)
+        binding.githubUserRecyclerView.setItemViewCacheSize(30)
         // Scroll listener
         binding.githubUserRecyclerView.clearOnScrollListeners()
         binding.githubUserRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
