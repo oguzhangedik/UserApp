@@ -1,6 +1,7 @@
 package com.example.userapp.core.data.dto.user
 
 import android.os.Parcelable
+import android.view.View
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
@@ -10,7 +11,7 @@ import kotlinx.parcelize.Parcelize
 @Entity
 data class GithubUserSearchRequest(
     val textInUserNameToSearch: String = "A",
-    val page: Int = 1,
+    val page: Int = 0,
     val perPageUserCount: Int = 30
 ) {
     @PrimaryKey(autoGenerate = true) var dbId: Long = 0
@@ -23,8 +24,7 @@ data class GithubUserResponse(
     @Json(name = "items") val items: List<GithubUser>?
 ) : Parcelable
 
-@Entity
-@Parcelize
+    @Entity
     data class GithubUser(
     @Json(name = "login") val login: String?,
     @Json(name = "id") val id: Int?,
@@ -46,12 +46,23 @@ data class GithubUserResponse(
     @Json(name = "user_view_type") val userViewType: String?,
     @Json(name = "site_admin") val siteAdmin: Boolean?,
     @Json(name = "score") val score: Double?
-) : Parcelable {
+) : BaseListItemOfGithubUser() {
     @PrimaryKey(autoGenerate = true) var dbId: Long = 0
 
     var searchRequestDbId: Long = 0
 
     var isFavorite : Boolean? = false
+}
+
+data class NoItemOfGithubUser(val noItemMessage : String = "Kullanıcı Bulunamadı.") : BaseListItemOfGithubUser()
+
+class ProgressItemOfGithubUser : BaseListItemOfGithubUser()
+
+@Parcelize
+open class BaseListItemOfGithubUser : Parcelable
+
+interface GithubUserItemClickListener {
+    fun onUserClicked(view : View?, githubUser: GithubUser?)
 }
 
 
