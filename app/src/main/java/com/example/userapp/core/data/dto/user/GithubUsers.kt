@@ -110,4 +110,24 @@ data class GithubUserDetail(
     @PrimaryKey(autoGenerate = true) var dbId: Long = 0
 }
 
+@Parcelize
+open class BaseListItemOfGithubUserDetail : Parcelable
 
+interface GithubUserDetailItemClickListener {
+    fun onUserFavoriteButtonClicked(favoriteView: View?, userDetailHeaderItem: UserDetailHeaderItem?)
+}
+
+data class UserDetailHeaderItem (
+    val avatarUrl: String,
+    var isFavorite : Boolean,
+    val name : String,
+    val company : String,
+    val publicRepos: String,
+    val followers: String,
+    val following: String
+) : BaseListItemOfGithubUserDetail()
+
+class UserDetailListItem(
+    val title : String,
+    val description : String
+) : BaseListItemOfGithubUserDetail()

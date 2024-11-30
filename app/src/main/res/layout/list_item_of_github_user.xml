@@ -29,6 +29,7 @@
         app:roundImageUrl="@{data.avatarUrl}"
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
+        tools:background="@color/red"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

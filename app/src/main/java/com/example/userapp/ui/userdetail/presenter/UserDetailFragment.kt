@@ -1,12 +1,17 @@
 package com.example.userapp.ui.userdetail.presenter
 
+import android.view.View
 import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.userapp.R
+import com.example.userapp.adapter.GithubUserDetailAdapter
+import com.example.userapp.core.data.dto.user.GithubUserDetailItemClickListener
+import com.example.userapp.core.data.dto.user.UserDetailHeaderItem
 import com.example.userapp.core.extensions.observe
 import com.example.userapp.core.extensions.safeLet
 import com.example.userapp.core.platform.BaseFragment
+import com.example.userapp.core.utils.delayClick
 import com.example.userapp.databinding.FragmentUserDetailBinding
 import com.example.userapp.ui.userdetail.domain.UserDetailActionState
 import com.example.userapp.ui.userdetail.domain.UserDetailViewState
@@ -18,6 +23,7 @@ class UserDetailFragment : BaseFragment<FragmentUserDetailBinding>(
 ) {
     override val viewModel: UserDetailViewModel by viewModels()
 
+    private var githubUserDetailAdapter: GithubUserDetailAdapter? = null
 
     override fun initView() {
         setStatusBarColor(R.color.statusBarColor)
@@ -41,7 +47,16 @@ class UserDetailFragment : BaseFragment<FragmentUserDetailBinding>(
                 when (userDetailActionState) {
                     UserDetailActionState.NULL -> Unit
                     UserDetailActionState.GET_GITHUB_USER_DETAIL -> {
-                        safeLet(githubUser, githubUserDetail) { _,_ ->
+                        safeLet(githubUser, githubUserDetail, userDetails) { _,_, userDetails->
+                            githubUserDetailAdapter = GithubUserDetailAdapter(userDetails,
+                                object : GithubUserDetailItemClickListener {
+                                    override fun onUserFavoriteButtonClicked(
+                                        favoriteView: View?,
+                                        userDetailHeaderItem: UserDetailHeaderItem?) {
+                                        favoriteView?.delayClick()
+                                    }
+                                })
+                            binding.githubUserDetailRecyclerView.adapter = githubUserDetailAdapter
 
                         }
                     }

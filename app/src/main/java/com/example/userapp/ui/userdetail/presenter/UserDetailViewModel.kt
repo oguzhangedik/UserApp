@@ -12,6 +12,7 @@ import com.example.userapp.core.platform.viewmodel.AppViewModel
 import com.example.userapp.core.platform.viewmodel.AppViewState
 import com.example.userapp.model.UiState
 import com.example.userapp.ui.userdetail.domain.UserDetailActionState
+import com.example.userapp.ui.userdetail.domain.UserDetailMapper
 import com.example.userapp.ui.userdetail.domain.UserDetailViewAction
 import com.example.userapp.ui.userdetail.domain.UserDetailViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,6 +24,7 @@ import kotlin.coroutines.CoroutineContext
 @HiltViewModel
 class UserDetailViewModel @Inject constructor(
     private val githubUserDetailUseCase: GithubUserDetailUseCase,
+    private val userDetailMapper : UserDetailMapper,
     private val localRepository: LocalData,
     private val coroutine: CoroutineContext
 ) : AppViewModel<UserDetailViewState, UserDetailViewAction>(UserDetailViewState()) {
@@ -37,7 +39,8 @@ class UserDetailViewModel @Inject constructor(
                localRepository.getGithubUserDetailByGithubUserId(githubUser)?.let { dbUserDetail ->
                    sendAction(viewAction = UserDetailViewAction.OnGithubUserDetail(
                        githubUser = githubUser,
-                       githubUserDetail = dbUserDetail
+                       githubUserDetail = dbUserDetail,
+                       userDetails = userDetailMapper.map(githubUser, dbUserDetail)
                    ))
                } ?: run {
                    val userDetailResponse = githubUserDetailUseCase.githubUserDetail(
@@ -54,7 +57,8 @@ class UserDetailViewModel @Inject constructor(
 
                            sendAction(viewAction = UserDetailViewAction.OnGithubUserDetail(
                                githubUser = githubUser,
-                               githubUserDetail = githubUserDetail
+                               githubUserDetail = githubUserDetail,
+                               userDetails = userDetailMapper.map(githubUser, githubUserDetail)
                            ))
                            showCustomError("success ${githubUserDetail.url}")
                        } ?: run {
@@ -78,6 +82,7 @@ class UserDetailViewModel @Inject constructor(
                     uiState = UiState.SUCCESS,
                     githubUser = action.githubUser,
                     githubUserDetail = action.githubUserDetail,
+                    userDetails = action.userDetails,
                     userDetailActionState = UserDetailActionState.GET_GITHUB_USER_DETAIL
                 )
             }

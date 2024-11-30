@@ -10,13 +10,12 @@ import com.example.userapp.core.data.dto.user.GithubUser
 import com.example.userapp.core.data.dto.user.GithubUserItemClickListener
 import com.example.userapp.core.data.dto.user.NoItemOfGithubUser
 import com.example.userapp.core.data.dto.user.ProgressItemOfGithubUser
-import com.example.userapp.core.platform.BaseRecyclerAdapter
 import com.example.userapp.databinding.ListItemOfGithubUserBinding
 import com.example.userapp.databinding.NoItemOfGithubUserBinding
 import com.example.userapp.databinding.ProgressItemOfGithubUserBinding
 
 class GithubUserAdapter(var githubUsers: ArrayList<BaseListItemOfGithubUser>, private val listener: GithubUserItemClickListener?) :
-    BaseRecyclerAdapter<ArrayList<BaseListItemOfGithubUser>>(githubUsers) {
+    BaseGithubUserRecyclerAdapter<ArrayList<BaseListItemOfGithubUser>>(githubUsers) {
     companion object {
         private const val VIEW_TYPE_LIST_ITEM = 2
         private const val VIEW_TYPE_PROGRESS_ITEM = 3

@@ -6,6 +6,8 @@ import com.example.userapp.core.data.usecase.githubuser.GithubUserDetailUseCase
 import com.example.userapp.core.data.usecase.githubuser.GithubUserDetailUseCaseImpl
 import com.example.userapp.core.data.usecase.githubuser.GithubUserUseCase
 import com.example.userapp.core.data.usecase.githubuser.GithubUserUseCaseImpl
+import com.example.userapp.ui.userdetail.domain.UserDetailMapper
+import com.example.userapp.ui.userdetail.domain.UserDetailMapperImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,5 +33,10 @@ object GithubUserUseCaseModule {
         coroutine: CoroutineContext
     ): GithubUserDetailUseCase {
         return GithubUserDetailUseCaseImpl(githubUserRepository, localRepository, coroutine)
+    }
+
+    @Provides
+    fun provideUserDetailMapper(): UserDetailMapper {
+        return UserDetailMapperImpl()
     }
 }

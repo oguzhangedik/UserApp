@@ -1,12 +1,13 @@
-package com.example.userapp.core.platform
+package com.example.userapp.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.userapp.core.data.dto.user.BaseListItemOfGithubUser
+import com.example.userapp.core.data.dto.user.BaseListItemOfGithubUserDetail
+import com.example.userapp.core.platform.BaseDiffCallBack
 
-abstract class BaseRecyclerAdapter<T : ArrayList<BaseListItemOfGithubUser>>(
+abstract class BaseGithubUserDetailRecyclerAdapter<T : ArrayList<BaseListItemOfGithubUserDetail>>(
     var items: T
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
