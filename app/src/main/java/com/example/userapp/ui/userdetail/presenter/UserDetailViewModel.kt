@@ -31,24 +31,41 @@ class UserDetailViewModel @Inject constructor(
         get() = state as UserDetailViewState
 
     fun githubUserDetail(githubUser: GithubUser?) {
-        safeLet(githubUser, githubUser?.login) { _, login ->
+        safeLet(githubUser, githubUser?.login) { githubUser, login ->
             viewModelScope.launch(coroutine) {
                 setLoading(true)
-                val userDetailResponse = githubUserDetailUseCase.githubUserDetail(
-                    request = GithubUserDetailRequest(login)
-                ).first()
+               localRepository.getGithubUserDetailByGithubUserId(githubUser)?.let { dbUserDetail ->
+                   sendAction(viewAction = UserDetailViewAction.OnGithubUserDetail(
+                       githubUser = githubUser,
+                       githubUserDetail = dbUserDetail
+                   ))
+               } ?: run {
+                   val userDetailResponse = githubUserDetailUseCase.githubUserDetail(
+                       request = GithubUserDetailRequest(login)
+                   ).first()
 
-                if (userDetailResponse.status == Status.SUCCESS) {
-                    showCustomError("success ${userDetailResponse.data?.url}")
-                    sendAction(viewAction = UserDetailViewAction.OnGithubUserDetail(
-                        githubUser = githubUser,
-                        githubUserDetail = userDetailResponse.data
-                    ))
-                    setLoading(false)
-                } else {
-                    showCustomError("hata")
-                    setLoading(false)
-                }
+                   if (userDetailResponse.status == Status.SUCCESS) {
+                       userDetailResponse.data?.let { githubUserDetail ->
+
+                           val dbIdOfGithubUserDetail
+                           = localRepository.insertGithubUserDetail(githubUserDetail)
+
+                           githubUserDetail.dbId = dbIdOfGithubUserDetail
+
+                           sendAction(viewAction = UserDetailViewAction.OnGithubUserDetail(
+                               githubUser = githubUser,
+                               githubUserDetail = githubUserDetail
+                           ))
+                           showCustomError("success ${githubUserDetail.url}")
+                       } ?: run {
+                           showCustomError("hata user detail is null")
+                       }
+                   } else {
+                       showCustomError("hata")
+                   }
+               }
+
+                setLoading(false)
             }
         }
     }

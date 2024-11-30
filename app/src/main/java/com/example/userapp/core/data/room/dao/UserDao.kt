@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import com.example.userapp.core.data.dto.login.LoginResponse
 import com.example.userapp.core.data.dto.user.GithubUser
+import com.example.userapp.core.data.dto.user.GithubUserDetail
 import com.example.userapp.core.data.dto.user.GithubUserSearchRequest
 import com.example.userapp.core.data.room.BaseDao
 
@@ -42,4 +43,10 @@ abstract class GithubUserDao  : BaseDao<GithubUser>() {
     // GithubUser liste ekleme (Insert)
     @Insert
     abstract suspend fun insertGithubUsers(githubUsers: List<GithubUser>) : List<Long>
+}
+
+@Dao
+abstract class GithubUserDetailDao  : BaseDao<GithubUserDetail>() {
+    @Query("SELECT * FROM GithubUserDetail WHERE id = :id")
+    abstract suspend fun getByGithubUserId(id: Int): GithubUserDetail?
 }

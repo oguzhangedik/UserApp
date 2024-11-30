@@ -6,6 +6,7 @@ import com.example.userapp.core.data.local.LocalDataImpl
 import com.example.userapp.core.data.repository.GithubUserRepository
 import com.example.userapp.core.data.repository.GithubUserRepositoryImpl
 import com.example.userapp.core.data.room.dao.GithubUserDao
+import com.example.userapp.core.data.room.dao.GithubUserDetailDao
 import com.example.userapp.core.data.room.dao.GithubUserSearchRequestDao
 import com.example.userapp.core.data.room.dao.UserDao
 import com.example.userapp.core.netwok.Network
@@ -36,8 +37,10 @@ object RepositoryModule {
     @Provides
     fun provideLocalRepository(@ApplicationContext context: Context, userDao: UserDao,
                                githubUserSearchRequestDao: GithubUserSearchRequestDao,
-                               githubUserDao: GithubUserDao): LocalData {
-        return LocalDataImpl(context, userDao, githubUserSearchRequestDao, githubUserDao)
+                               githubUserDao: GithubUserDao,
+                               githubUserDetailDao: GithubUserDetailDao
+    ): LocalData {
+        return LocalDataImpl(context, userDao, githubUserSearchRequestDao, githubUserDao, githubUserDetailDao)
     }
     @Singleton
     @Provides

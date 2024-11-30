@@ -1,6 +1,7 @@
 package com.example.userapp.core.data.local
 
 import com.example.userapp.core.data.dto.user.GithubUser
+import com.example.userapp.core.data.dto.user.GithubUserDetail
 import com.example.userapp.core.data.dto.user.GithubUserSearchRequest
 
 interface LocalData {
@@ -25,4 +26,9 @@ interface LocalData {
     suspend fun insertGithubUsers(githubUsers: List<GithubUser>) : List<Long>
 
     suspend fun updateGithubUser(githubUser: GithubUser)
+
+
+    suspend fun getGithubUserDetailByGithubUserId(githubUser: GithubUser): GithubUserDetail?
+
+    suspend fun insertGithubUserDetail(githubUserDetail: GithubUserDetail) : Long
 }
