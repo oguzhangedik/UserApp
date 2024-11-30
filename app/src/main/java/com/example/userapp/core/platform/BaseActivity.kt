@@ -2,7 +2,6 @@ package com.example.userapp.core.platform
 
 import android.Manifest
 import android.app.Activity
-import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -16,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.example.userapp.R
 import com.example.userapp.core.extensions.negativeButton
 import com.example.userapp.core.extensions.observe
 import com.example.userapp.core.extensions.observeEvent
@@ -26,6 +24,7 @@ import com.example.userapp.core.extensions.toastMessage
 import com.example.userapp.core.platform.viewmodel.BaseAction
 import com.example.userapp.core.platform.viewmodel.BaseViewModel
 import com.example.userapp.core.platform.viewmodel.BaseViewState
+import com.example.userapp.core.views.ProgressDialog
 import timber.log.Timber
 
 abstract class BaseActivity<DB : ViewDataBinding>
@@ -67,8 +66,7 @@ abstract class BaseActivity<DB : ViewDataBinding>
         binding.lifecycleOwner = this
         observeEvent(viewModel.baseEvent, ::onViewEvent)
 
-        progressDialog = ProgressDialog(this)
-        progressDialog.setCancelable(false)
+        progressDialog = ProgressDialog(this, ProgressDialog.THEME_LIGHT)
         onDataBinding()
         checkNotificationPermission()
 

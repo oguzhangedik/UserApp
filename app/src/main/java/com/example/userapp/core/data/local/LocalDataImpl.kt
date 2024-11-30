@@ -1,22 +1,16 @@
 package com.example.userapp.core.data.local
 
 import android.content.Context
-import com.example.userapp.core.data.Result
-import com.example.userapp.core.data.dto.error.ErrorMapper
-import com.example.userapp.core.data.dto.login.LoginRequest
-import com.example.userapp.core.data.dto.login.LoginResponse
-import com.example.userapp.core.data.dto.login.isExist
 import com.example.userapp.core.data.dto.user.GithubUser
 import com.example.userapp.core.data.dto.user.GithubUserDetail
 import com.example.userapp.core.data.dto.user.GithubUserSearchRequest
 import com.example.userapp.core.data.room.dao.GithubUserDao
 import com.example.userapp.core.data.room.dao.GithubUserDetailDao
 import com.example.userapp.core.data.room.dao.GithubUserSearchRequestDao
-import com.example.userapp.core.data.room.dao.UserDao
 import javax.inject.Inject
 
 class LocalDataImpl @Inject constructor(
-    val context: Context, val userDao: UserDao,
+    val context: Context,
     val githubUserSearchRequestDao: GithubUserSearchRequestDao,
     val githubUserDao: GithubUserDao,
     val githubUserDetailDao: GithubUserDetailDao

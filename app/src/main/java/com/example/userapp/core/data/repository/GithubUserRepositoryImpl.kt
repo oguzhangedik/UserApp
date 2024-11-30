@@ -23,18 +23,9 @@ class GithubUserRepositoryImpl @Inject constructor(
 
     @WorkerThread
     override suspend fun searchGithubUsers(request: GithubUserSearchRequest): Flow<Resource<GithubUserResponse?>> {
-
         return handleResponse {
             appClient.searchGithubUsers(request)
         }
-
-        /*return when (val response = processCall(appClient.searchGithubUsers(request))) {
-            is GithubUserResponse -> Result.Success(data = response)
-
-            is ErrorResponse -> Result.Error(response)
-
-            else -> Result.Error(null)
-        }*/
     }
 
     @WorkerThread

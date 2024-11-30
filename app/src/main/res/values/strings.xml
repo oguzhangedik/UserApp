@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">User App</string>
+    <!-- ProcessDialog -->
+    <string name="loading">Yükleniyor</string>
+    <string name="progressDialog_title">Başlık</string>
+    <!-- Dialogs-->
+    <string name="ok_text">Tamam</string>
+    <string name="cancel">İptal</string>
+
 </resources>

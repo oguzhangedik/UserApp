@@ -40,7 +40,7 @@ class UserSearchViewModel @Inject constructor(
 
     fun searchGithubUsers() {
         viewModelScope.launch(coroutine) {
-            setLoading(true)
+            if(isFirstRequest()) setLoading(true)
             val newSearchRequest = generateNextPageUserSearchRequest(userSearchViewState.searchText)
             localRepository.getByUserSearchRequestParams(newSearchRequest)
                 .firstOrNull()?.let { dbUserSearchRequest ->
@@ -65,11 +65,14 @@ class UserSearchViewModel @Inject constructor(
                                 githubUsersDbIds[indexOfGithubUser]
                         }
                         mapGithubUserListAndSendAction(newSearchRequest, ArrayList(githubUsers))
-                        showInfoMessage("success")
                     }
                     setLoading(false)
                 } else {
-                    showCustomError("hata")
+                    searchUserResponse.error?.message?.let { errorMessage ->
+                        showCustomError(errorMessage)
+                    } ?: run {
+                        showCustomError("Something went wrong")
+                    }
                     setLoading(false)
                 }
             }
@@ -141,9 +144,7 @@ class UserSearchViewModel @Inject constructor(
         newRequest: GithubUserSearchRequest,
         newGithubUsers: ArrayList<GithubUser>
     ) {
-        if (userSearchViewState.githubUserSearchRequest == null
-            && userSearchViewState.githubUsers == null
-        ) {
+        if (isFirstRequest()) {
             val githubUserListItems = ArrayList<BaseListItemOfGithubUser>(newGithubUsers)
             if (githubUserListItems.isEmpty()) {
                 githubUserListItems.add(NoItemOfGithubUser())
@@ -178,6 +179,9 @@ class UserSearchViewModel @Inject constructor(
             }
         }
     }
+
+    private fun isFirstRequest() = (userSearchViewState.githubUserSearchRequest == null
+                && userSearchViewState.githubUsers == null)
 
     fun updateSearchText(newText: String) {
         searchTextDebounceJob?.cancel()

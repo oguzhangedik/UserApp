@@ -24,7 +24,9 @@ object NetworkHandler {
                         )
                     )
                 } else {
-                    throw HttpException(response)
+                    send(
+                        response.defaultServerError()
+                    )
                 }
             } catch (e: UnknownHostException) {
                 send(

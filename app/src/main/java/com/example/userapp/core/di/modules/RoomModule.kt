@@ -6,7 +6,6 @@ import com.example.userapp.core.data.room.AppDatabase
 import com.example.userapp.core.data.room.dao.GithubUserDao
 import com.example.userapp.core.data.room.dao.GithubUserDetailDao
 import com.example.userapp.core.data.room.dao.GithubUserSearchRequestDao
-import com.example.userapp.core.data.room.dao.UserDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,10 +26,6 @@ object RoomModule {
         AppDatabase::class.java,
         "base"
     ).build()
-
-    @Singleton
-    @Provides
-    fun provideUserDao(db: AppDatabase): UserDao = db.UserDao()
 
     @Singleton
     @Provides
