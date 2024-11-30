@@ -15,6 +15,7 @@ import com.example.userapp.core.utils.delayClick
 import com.example.userapp.databinding.FragmentUserDetailBinding
 import com.example.userapp.ui.userdetail.domain.UserDetailActionState
 import com.example.userapp.ui.userdetail.domain.UserDetailViewState
+import com.example.userapp.ui.util.FragmentDataTransferKeyword
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,17 +29,27 @@ class UserDetailFragment : BaseFragment<FragmentUserDetailBinding>(
     override fun initView() {
         setStatusBarColor(R.color.statusBarColor)
         observeData()
+        binding.fragment = this
         val userDetailArgs = UserDetailFragmentArgs.fromBundle(requireArguments())
         viewModel.githubUserDetail(userDetailArgs.githubUser)
 
-        // Geri butonuna basıldığında
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             goBack()
         }
     }
 
+    fun onBackButtonClicked(view : View?) {
+        view?.delayClick()
+        goBack()
+    }
+
     private fun goBack() {
-        findNavController().navigateUp()
+        findNavController().apply {
+            previousBackStackEntry?.savedStateHandle?.set(
+                FragmentDataTransferKeyword.GITHUB_USER,
+                viewModel.userDetailViewState.githubUser)
+            navigateUp()
+        }
     }
 
     private fun observeData() {
@@ -54,13 +65,26 @@ class UserDetailFragment : BaseFragment<FragmentUserDetailBinding>(
                                         favoriteView: View?,
                                         userDetailHeaderItem: UserDetailHeaderItem?) {
                                         favoriteView?.delayClick()
+                                        viewModel.updateGithubUserFavoriteState()
                                     }
                                 })
                             binding.githubUserDetailRecyclerView.adapter = githubUserDetailAdapter
 
                         }
                     }
-
+                    UserDetailActionState.FAVORITE_STATE_CHANGED_TO_FAVORITE,
+                    UserDetailActionState.FAVORITE_STATE_CHANGED_TO_UNFAVORITE -> {
+                        userDetails?.filterIsInstance<UserDetailHeaderItem>()?.firstOrNull()?.let{
+                            userDetailHeaderItem ->
+                            val indexOfUserDetailHeaderItem =
+                                githubUserDetailAdapter?.items?.
+                                indexOf(userDetailHeaderItem) ?: -1
+                            if (indexOfUserDetailHeaderItem >= 0) {
+                                githubUserDetailAdapter?.
+                                notifyItemChanged(indexOfUserDetailHeaderItem)
+                            }
+                        }
+                    }
                 }
             }
         }

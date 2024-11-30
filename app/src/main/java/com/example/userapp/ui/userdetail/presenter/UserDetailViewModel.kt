@@ -3,6 +3,7 @@ package com.example.userapp.ui.userdetail.presenter
 import androidx.lifecycle.viewModelScope
 import com.example.userapp.core.data.dto.user.GithubUser
 import com.example.userapp.core.data.dto.user.GithubUserDetailRequest
+import com.example.userapp.core.data.dto.user.UserDetailHeaderItem
 import com.example.userapp.core.data.local.LocalData
 import com.example.userapp.core.data.usecase.githubuser.GithubUserDetailUseCase
 import com.example.userapp.core.extensions.safeLet
@@ -85,6 +86,29 @@ class UserDetailViewModel @Inject constructor(
                     userDetails = action.userDetails,
                     userDetailActionState = UserDetailActionState.GET_GITHUB_USER_DETAIL
                 )
+            }
+            is UserDetailViewAction.OnFavoriteStateChanged -> {
+                userDetailViewState.copy(
+                    uiState = UiState.SUCCESS,
+                    githubUser = action.githubUser,
+                    userDetailActionState = if(action.githubUser?.isFavorite == true)
+                        UserDetailActionState.FAVORITE_STATE_CHANGED_TO_FAVORITE
+                    else UserDetailActionState.FAVORITE_STATE_CHANGED_TO_UNFAVORITE
+                )
+            }
+        }
+    }
+
+    fun updateGithubUserFavoriteState(){
+        safeLet(userDetailViewState.githubUser, userDetailViewState.userDetails)
+        { githubUser, userDetails ->
+            viewModelScope.launch(coroutine) {
+                githubUser.isFavorite = githubUser.isFavorite != true
+                localRepository.updateGithubUser(githubUser)
+                userDetails.filterIsInstance<UserDetailHeaderItem>()
+                    .firstOrNull()?.isFavorite = githubUser.isFavorite ?: false
+                sendAction(viewAction = UserDetailViewAction
+                    .OnFavoriteStateChanged(githubUser = githubUser))
             }
         }
     }

@@ -78,6 +78,13 @@ class UserSearchViewModel @Inject constructor(
 
     override fun onReduceState(viewAction: AppViewAction): AppViewState {
         return when (val action = viewAction as UserSearchViewAction) {
+            is UserSearchViewAction.OnClearAction -> {
+                userSearchViewState.copy(
+                    uiState = UiState.SUCCESS,
+                    userSearchActionState = UserSearchActionState.NULL
+                )
+            }
+
             is UserSearchViewAction.OnGithubUsers -> {
                 userSearchViewState.copy(
                     uiState = UiState.SUCCESS,
@@ -197,5 +204,9 @@ class UserSearchViewModel @Inject constructor(
                     .OnGithubUserFavoriteStateUpdate(githubUser = githubUser))
             }
         }
+    }
+
+    fun clearActionState() {
+        sendAction(viewAction = UserSearchViewAction.OnClearAction)
     }
 }

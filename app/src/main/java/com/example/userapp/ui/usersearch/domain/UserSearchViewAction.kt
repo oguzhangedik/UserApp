@@ -22,4 +22,6 @@ sealed class UserSearchViewAction : AppViewAction {
 
     data class OnGithubUserFavoriteStateUpdate(val githubUser: GithubUser
     ) : UserSearchViewAction()
+
+    data object OnClearAction : UserSearchViewAction()
 }

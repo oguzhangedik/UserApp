@@ -12,4 +12,8 @@ sealed class UserDetailViewAction : AppViewAction {
         val githubUserDetail : GithubUserDetail? = null,
         val userDetails: ArrayList<BaseListItemOfGithubUserDetail>? = null
     ) : UserDetailViewAction()
+
+    data class OnFavoriteStateChanged(
+        val githubUser : GithubUser? = null
+    ) : UserDetailViewAction()
 }
