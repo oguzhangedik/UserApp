@@ -34,6 +34,7 @@ class UserSearchFragment : BaseFragment<FragmentUserSearchBinding>(
         setStatusBarColor(R.color.statusBarColor)
         observeData()
         binding.viewModel = viewModel
+        binding.fragment = this
         setupRecyclerView()
         setupSearchEditText()
 
@@ -45,6 +46,12 @@ class UserSearchFragment : BaseFragment<FragmentUserSearchBinding>(
             updateRecyclerViewCurrentGuestUserFavoriteStatue(
                 viewModel.userSearchViewState.githubUsers, githubUser)
         }
+    }
+
+    fun onRefreshButtonClicked(view : View?) {
+        view?.delayClick()
+        view?.visibility = View.GONE
+        viewModel.searchGithubUsers()
     }
 
     private fun observeData() {
@@ -78,10 +85,10 @@ class UserSearchFragment : BaseFragment<FragmentUserSearchBinding>(
                         }
                     }
                     UserSearchActionState.LOAD_MORE_GITHUB_USERS -> {
-                        githubUsers?.let { mappedUserList ->
-                            githubUserAdapter?.updateData(mappedUserList)
-                            isLoading = false
-                        }
+                        updateRecyclerViewAndAllowLoadMore(githubUsers)
+                    }
+                    UserSearchActionState.ALLOW_LOAD_MORE_ACTION -> {
+                        isLoading = false
                     }
                     UserSearchActionState.SEARCH_NEW_GITHUB_USERS -> {
                         viewModel.searchGithubUsers()
@@ -91,9 +98,22 @@ class UserSearchFragment : BaseFragment<FragmentUserSearchBinding>(
                         updateRecyclerViewCurrentGuestUserFavoriteStatue(
                             githubUsers, lastFavoriteUpdateGithubUser)
                     }
+                    UserSearchActionState.ENABLE_REFRESH_BUTTON_AND_CLEAR_RECYCLER_VIEW -> {
+                        updateRecyclerViewAndAllowLoadMore(githubUsers)
+                        binding.refreshImageView.visibility = View.VISIBLE
+                    }
                 }
             }
         }
+    }
+
+    private fun updateRecyclerViewAndAllowLoadMore(githubUsers : ArrayList<BaseListItemOfGithubUser>?) {
+        githubUsers?.let { mappedUserList ->
+            githubUserAdapter?.updateData(mappedUserList)
+        } ?: run {
+            githubUserAdapter?.clear()
+        }
+        isLoading = false
     }
 
     private fun updateRecyclerViewCurrentGuestUserFavoriteStatue(
@@ -131,7 +151,7 @@ class UserSearchFragment : BaseFragment<FragmentUserSearchBinding>(
     }
 
     private fun loadMoreData() {
-        viewModel.searchGithubUsers()
+        viewModel.loadMoreData()
     }
 
     private fun setupSearchEditText() {

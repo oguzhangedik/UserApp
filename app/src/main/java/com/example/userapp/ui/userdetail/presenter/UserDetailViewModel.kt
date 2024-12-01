@@ -61,12 +61,16 @@ class UserDetailViewModel @Inject constructor(
                                githubUserDetail = githubUserDetail,
                                userDetails = userDetailMapper.map(githubUser, githubUserDetail)
                            ))
-                           showCustomError("success ${githubUserDetail.url}")
                        } ?: run {
-                           showCustomError("hata user detail is null")
+                           showCustomError("User detail is null")
                        }
                    } else {
-                       showCustomError("hata")
+                       userDetailResponse.error?.message?.let { errorMessage ->
+                           showCustomError(errorMessage)
+                       } ?: run {
+                           showCustomError("Something went wrong")
+                       }
+                       setLoading(false)
                    }
                }
 

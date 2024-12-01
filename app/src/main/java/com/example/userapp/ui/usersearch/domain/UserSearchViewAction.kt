@@ -24,4 +24,8 @@ sealed class UserSearchViewAction : AppViewAction {
     ) : UserSearchViewAction()
 
     data object OnClearAction : UserSearchViewAction()
+
+    data object OnAllowLoadMoreAction : UserSearchViewAction()
+
+    data object OnEnableRefreshButtonAndClearRecyclerViewAction : UserSearchViewAction()
 }

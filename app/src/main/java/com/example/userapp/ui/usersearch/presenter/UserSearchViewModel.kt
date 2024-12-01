@@ -37,6 +37,7 @@ class UserSearchViewModel @Inject constructor(
         get() = state as UserSearchViewState
 
     private var searchTextDebounceJob: Job? = null
+    private var loadMoreDebounceJob: Job? = null
 
     fun searchGithubUsers() {
         viewModelScope.launch(coroutine) {
@@ -70,6 +71,13 @@ class UserSearchViewModel @Inject constructor(
                 } else {
                     searchUserResponse.error?.message?.let { errorMessage ->
                         showCustomError(errorMessage)
+                        sendAction(viewAction = UserSearchViewAction.OnAllowLoadMoreAction)
+                        if (isFirstRequest()) {
+                            sendAction(viewAction = UserSearchViewAction.OnEnableRefreshButtonAndClearRecyclerViewAction)
+                        } else {
+                            sendAction(viewAction = UserSearchViewAction.OnClearAction)
+                        }
+
                     } ?: run {
                         showCustomError("Something went wrong")
                     }
@@ -87,7 +95,18 @@ class UserSearchViewModel @Inject constructor(
                     userSearchActionState = UserSearchActionState.NULL
                 )
             }
-
+            is UserSearchViewAction.OnAllowLoadMoreAction -> {
+                userSearchViewState.copy(
+                    uiState = UiState.SUCCESS,
+                    userSearchActionState = UserSearchActionState.ALLOW_LOAD_MORE_ACTION
+                )
+            }
+            is UserSearchViewAction.OnEnableRefreshButtonAndClearRecyclerViewAction -> {
+                userSearchViewState.copy(
+                    uiState = UiState.SUCCESS,
+                    userSearchActionState = UserSearchActionState.ENABLE_REFRESH_BUTTON_AND_CLEAR_RECYCLER_VIEW
+                )
+            }
             is UserSearchViewAction.OnGithubUsers -> {
                 userSearchViewState.copy(
                     uiState = UiState.SUCCESS,
@@ -151,7 +170,7 @@ class UserSearchViewModel @Inject constructor(
             } else if (newGithubUsers.size == 30) {
                 githubUserListItems.add(ProgressItemOfGithubUser())
             }
-
+            sendAction(viewAction = UserSearchViewAction.OnAllowLoadMoreAction)
             sendAction(
                 viewAction = UserSearchViewAction.OnGithubUsers(
                     githubUserSearchRequest = newRequest,
@@ -170,6 +189,7 @@ class UserSearchViewModel @Inject constructor(
                 if (newGithubUsers.size == 30) {
                     githubUserListItems.add(ProgressItemOfGithubUser())
                 }
+                sendAction(viewAction = UserSearchViewAction.OnAllowLoadMoreAction)
                 sendAction(
                     viewAction = UserSearchViewAction.OnLoadMoreGithubUsers(
                         githubUserSearchRequest = newRequest,
@@ -185,10 +205,11 @@ class UserSearchViewModel @Inject constructor(
 
     fun updateSearchText(newText: String) {
         searchTextDebounceJob?.cancel()
-        searchTextDebounceJob = viewModelScope.launch {
+        searchTextDebounceJob = viewModelScope.launch(coroutine) {
             delay(2000L)
             newText.trim().let {
                 if (it.isNotEmpty() && it.isNotBlank()) {
+                    sendAction(viewAction = UserSearchViewAction.OnAllowLoadMoreAction)
                     sendAction(
                         viewAction = UserSearchViewAction.OnSearchNewGithubUsers(
                             searchText = it
@@ -196,6 +217,14 @@ class UserSearchViewModel @Inject constructor(
                     )
                 }
             }
+        }
+    }
+
+    fun loadMoreData() {
+        loadMoreDebounceJob?.cancel()
+        loadMoreDebounceJob = viewModelScope.launch(coroutine) {
+            delay(1000L)
+            searchGithubUsers()
         }
     }
 

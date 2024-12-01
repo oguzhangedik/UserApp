@@ -7,6 +7,10 @@
         <variable
             name="viewModel"
             type="com.example.userapp.ui.usersearch.presenter.UserSearchViewModel" />
+
+        <variable
+            name="fragment"
+            type="com.example.userapp.ui.usersearch.presenter.UserSearchFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -42,6 +46,19 @@
                 android:hint="Kullanıcı Ara"
                 android:inputType="text"
                 android:text="@{viewModel.userSearchViewState.searchText}" />
+
+            <ImageView
+                android:id="@+id/refreshImageView"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                app:layout_constraintEnd_toEndOf="@+id/searchEditText"
+                app:layout_constraintTop_toTopOf="@+id/searchEditText"
+                app:layout_constraintBottom_toBottomOf="@+id/searchEditText"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/refresh_icon"
+                tools:visibility="visible"
+                android:visibility="gone"
+                android:onClick="@{(view) -> fragment.onRefreshButtonClicked(view) }"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
