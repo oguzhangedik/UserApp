@@ -8,7 +8,6 @@ import com.example.userapp.core.data.remote.AppService
 
 
 import retrofit2.Response
-import retrofit2.http.QueryMap
 import javax.inject.Inject
 
 class AppClient @Inject constructor(

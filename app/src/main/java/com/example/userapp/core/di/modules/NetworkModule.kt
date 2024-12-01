@@ -5,13 +5,9 @@ import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.example.userapp.core.common.build.BuildConfigProvider
 import com.example.userapp.core.common.buildConfig.FrameworkBuildConfigProvider
-import com.example.userapp.core.common.dataStore.AppDataStore
 import com.example.userapp.core.di.qualifers.ProjectOkHttpClient
-import com.example.userapp.core.di.qualifers.ProjectOkHttpClientWithAuthentication
-import com.example.userapp.core.di.qualifers.RetrofitAuthService
 import com.example.userapp.core.di.qualifers.RetrofitAppService
-import com.example.userapp.core.netwok.MainRestHeadersInterceptor
-import com.example.userapp.core.netwok.interceptor.AuthenticationInterceptor
+import com.example.userapp.core.netwok.interceptor.ServiceRequestInterceptor
 import com.example.userapp.core.netwok.interceptor.HttpRequestInterceptor
 import com.example.userapp.core.netwok.retrofit.NetworkConfig
 import com.squareup.moshi.Moshi
@@ -33,19 +29,19 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    @ProjectOkHttpClientWithAuthentication
+    @ProjectOkHttpClient
     @Provides
     @Singleton
-    fun provideOkHttpClientWithAuthentication(
+    fun provideOkHttpClient(
         @ApplicationContext appContext: Context,
         networkConfig: NetworkConfig,
         loggingInterceptor: HttpLoggingInterceptor,
-        authenticationInterceptor: AuthenticationInterceptor,
+        serviceRequestInterceptor: ServiceRequestInterceptor,
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(HttpRequestInterceptor(networkConfig))
             .addInterceptor(loggingInterceptor)
-            .addInterceptor(authenticationInterceptor)
+            .addInterceptor(serviceRequestInterceptor)
             .addInterceptor(ChuckerInterceptor(appContext))
             .callTimeout(networkConfig.getDefaultCallTimeoutMillis(), TimeUnit.MILLISECONDS)
             .connectTimeout(networkConfig.getDefaultConnectTimeoutMillis(), TimeUnit.MILLISECONDS)
@@ -59,38 +55,9 @@ object NetworkModule {
     @Singleton
     fun provideRetrofitForAppService(
         networkConfig: NetworkConfig,
-        @ProjectOkHttpClientWithAuthentication okHttpClient: OkHttpClient,
+        @ProjectOkHttpClient okHttpClient: OkHttpClient,
         moshi: Moshi
     ): Retrofit =
-        Retrofit.Builder().client(okHttpClient).baseUrl(networkConfig.getBaseUrl())
-            .addConverterFactory(MoshiConverterFactory.create(moshi)).build()
-
-    @ProjectOkHttpClient
-    @Provides
-    @Singleton
-    fun provideOkHttpClient(
-        @ApplicationContext appContext: Context,
-        networkConfig: NetworkConfig,
-        loggingInterceptor: HttpLoggingInterceptor
-    ): OkHttpClient {
-        return OkHttpClient.Builder()
-            .addInterceptor(HttpRequestInterceptor(networkConfig))
-            .addInterceptor(loggingInterceptor)
-            .addInterceptor(ChuckerInterceptor(appContext))
-            .callTimeout(networkConfig.getDefaultCallTimeoutMillis(), TimeUnit.MILLISECONDS)
-            .connectTimeout(networkConfig.getDefaultConnectTimeoutMillis(), TimeUnit.MILLISECONDS)
-            .readTimeout(networkConfig.getDefaultReadTimeoutMillis(), TimeUnit.MILLISECONDS)
-            .writeTimeout(networkConfig.getDefaultWriteTimeoutMillis(), TimeUnit.MILLISECONDS)
-            .build()
-    }
-
-    @RetrofitAuthService
-    @Provides
-    @Singleton
-    fun provideRetrofitForAuthService(
-        networkConfig: NetworkConfig,
-        @ProjectOkHttpClient okHttpClient: OkHttpClient,
-        moshi: Moshi): Retrofit =
         Retrofit.Builder().client(okHttpClient).baseUrl(networkConfig.getBaseUrl())
             .addConverterFactory(MoshiConverterFactory.create(moshi)).build()
 
@@ -113,13 +80,8 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideAuthenticationInterceptor(appDataStore: AppDataStore): AuthenticationInterceptor =
-        AuthenticationInterceptor(appDataStore = appDataStore)
-
-    @Provides
-    @Singleton
-    fun provideMainRestHeadersInterceptor(): MainRestHeadersInterceptor =
-        MainRestHeadersInterceptor()
+    fun provideServiceRequestInterceptor(): ServiceRequestInterceptor =
+        ServiceRequestInterceptor()
 
     @Provides
     @Singleton

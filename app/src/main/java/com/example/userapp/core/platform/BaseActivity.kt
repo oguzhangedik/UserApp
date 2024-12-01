@@ -1,13 +1,11 @@
 package com.example.userapp.core.platform
 
 import android.Manifest
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
@@ -24,13 +22,12 @@ import com.example.userapp.core.extensions.toastMessage
 import com.example.userapp.core.platform.viewmodel.BaseAction
 import com.example.userapp.core.platform.viewmodel.BaseViewModel
 import com.example.userapp.core.platform.viewmodel.BaseViewState
+import com.example.userapp.core.utils.Base
+import com.example.userapp.core.utils.SOMETHING_WENT_WRONG
 import com.example.userapp.core.views.ProgressDialog
-import timber.log.Timber
 
 abstract class BaseActivity<DB : ViewDataBinding>
     (@LayoutRes private val layoutId: Int) : AppCompatActivity() {
-
-    private val TAG = BaseActivity::class.java.simpleName
 
     val binding by lazy {
         DataBindingUtil.setContentView(this, layoutId) as DB
@@ -44,17 +41,7 @@ abstract class BaseActivity<DB : ViewDataBinding>
             // Permission is granted
         } else {
             // Permission is rejected
-            toastMessage("This application can't post or receive notifications without Notification permission")
-        }
-    }
-
-
-    protected val activityLauncher= registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        result: ActivityResult ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            Timber.tag(TAG).d(TAG, "intent received")
-        } else {
-            Timber.tag(TAG).e(TAG, "error on activity result!")
+            toastMessage(Base.PERMISSION_WARNING_MESSAGE)
         }
     }
 
@@ -95,7 +82,7 @@ abstract class BaseActivity<DB : ViewDataBinding>
                 this.baseContext.showDialog(
                     cancelable = true
                 ) {
-                    setMessage("notification_permission_warning")
+                    setMessage(Base.PERMISSION_WARNING_MESSAGE)
                     positiveButton {
                         permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                     }
@@ -111,7 +98,7 @@ abstract class BaseActivity<DB : ViewDataBinding>
     }
 
     fun showCommonError() {
-        Toast.makeText(baseContext, "something_went_wrong", Toast.LENGTH_LONG).show()
+        Toast.makeText(baseContext, SOMETHING_WENT_WRONG, Toast.LENGTH_LONG).show()
     }
 
     fun showError(@StringRes error: Int) {

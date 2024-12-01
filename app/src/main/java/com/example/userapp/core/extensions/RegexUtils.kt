@@ -3,6 +3,8 @@ package com.example.userapp.core.extensions
 import java.util.regex.Pattern
 
 object RegexUtils {
+    const val SEARCH_TEXT_REGEX = "[^a-zA-Z0-9\\s]"
+
     val EMAIL_ADDRESS: Pattern = Pattern.compile(
         "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
             "\\@" +

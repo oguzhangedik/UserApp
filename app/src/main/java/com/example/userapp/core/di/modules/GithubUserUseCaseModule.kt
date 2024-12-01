@@ -1,4 +1,4 @@
-package com.example.userapp.core.di.usecase
+package com.example.userapp.core.di.modules
 
 import com.example.userapp.core.data.local.LocalData
 import com.example.userapp.core.data.repository.GithubUserRepository
@@ -33,10 +33,5 @@ object GithubUserUseCaseModule {
         coroutine: CoroutineContext
     ): GithubUserDetailUseCase {
         return GithubUserDetailUseCaseImpl(githubUserRepository, localRepository, coroutine)
-    }
-
-    @Provides
-    fun provideUserDetailMapper(): UserDetailMapper {
-        return UserDetailMapperImpl()
     }
 }

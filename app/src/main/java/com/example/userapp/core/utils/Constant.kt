@@ -10,6 +10,9 @@ const val SOMETHING_WENT_WRONG = "Something went wrong"
 const val ZER0 = 0
 const val NETWORK_ERROR = "Check your network connection"
 
+object Base {
+    const val PERMISSION_WARNING_MESSAGE = "This application can't post or receive notifications without Notification permission"
+}
 
 object UserDetailListItemKey {
     const val BIO = "BIO"
@@ -20,7 +23,6 @@ object UserDetailListItemKey {
 }
 
 object UserSearch {
-    const val SEARCH_TEXT_REGEX = "[^a-zA-Z0-9\\s]"
     const val USER_NOT_FOUND = "User not found"
 
     const val LOAD_MORE_TRIGGER_THRESHOLD = 5

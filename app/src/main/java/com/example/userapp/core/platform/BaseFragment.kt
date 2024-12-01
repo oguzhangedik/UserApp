@@ -17,9 +17,6 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import com.example.userapp.core.common.dataStore.AppDataStore
-import com.example.userapp.core.di.qualifers.Event
-import com.example.userapp.core.di.qualifers.EventType
 import com.example.userapp.core.extensions.observe
 import com.example.userapp.core.extensions.observeEvent
 import com.example.userapp.core.extensions.positiveButton
@@ -28,19 +25,13 @@ import com.example.userapp.core.extensions.toastMessage
 import com.example.userapp.core.platform.viewmodel.BaseAction
 import com.example.userapp.core.platform.viewmodel.BaseViewModel
 import com.example.userapp.core.platform.viewmodel.BaseViewState
-import javax.inject.Inject
 
 abstract class BaseFragment<DB : ViewDataBinding>(
     @LayoutRes private val layoutId: Int) : Fragment() {
 
-    @Inject
-    protected lateinit var appDataStore: AppDataStore
-
     protected abstract val viewModel: BaseViewModel<out BaseViewState, out BaseAction>
 
     protected lateinit var binding: DB
-    protected val activityLauncher: BetterActivityResult<Intent, ActivityResult> =
-        BetterActivityResult.registerActivityForResult(this)
 
     //private lateinit var progressDialog: ProgressDialog
 
@@ -148,13 +139,12 @@ abstract class BaseFragment<DB : ViewDataBinding>(
     }
 
     fun showProgressView() {
+        hideSoftInput()
         (activity as? BaseActivity<*>)?.showProgressView()
-        //progressDialog.show()
     }
 
     fun hideProgressView() {
         (activity as? BaseActivity<*>)?.hideProgressView()
-        //progressDialog.dismiss()
     }
 
     open fun finishApp() {

@@ -36,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/edittext_bg"
                 android:minHeight="44dp"
+                android:imeOptions="actionDone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

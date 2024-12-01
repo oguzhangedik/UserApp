@@ -12,6 +12,7 @@ import com.example.userapp.adapter.GithubUserAdapter
 import com.example.userapp.core.data.dto.user.BaseListItemOfGithubUser
 import com.example.userapp.core.data.dto.user.GithubUser
 import com.example.userapp.core.data.dto.user.GithubUserItemClickListener
+import com.example.userapp.core.extensions.RegexUtils
 import com.example.userapp.core.extensions.observe
 import com.example.userapp.core.extensions.safeLet
 import com.example.userapp.core.platform.BaseFragment
@@ -169,7 +170,7 @@ class UserSearchFragment : BaseFragment<FragmentUserSearchBinding>(
         binding.searchEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 val text = s?.toString()?.trim() ?: EMPTY
-                val filteredText = text.replace(UserSearch.SEARCH_TEXT_REGEX.toRegex(), "")
+                val filteredText = text.replace(RegexUtils.SEARCH_TEXT_REGEX.toRegex(), "")
                 if (viewModel.userSearchViewState.searchText != filteredText) {
                     viewModel.updateSearchText(filteredText)
                 }
