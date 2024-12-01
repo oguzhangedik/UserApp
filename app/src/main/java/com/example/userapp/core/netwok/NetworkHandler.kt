@@ -4,6 +4,7 @@ import com.example.userapp.core.extensions.JsonSerializer.toObject
 import com.example.userapp.core.extensions.StringExtensions.empty
 import com.example.userapp.core.netwok.data.Resource
 import com.example.userapp.core.netwok.resource.ErrorResponse
+import com.example.userapp.core.utils.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import retrofit2.HttpException
@@ -11,22 +12,32 @@ import retrofit2.Response
 import java.net.UnknownHostException
 
 object NetworkHandler {
-    inline fun <T> handleResponse(crossinline request: suspend () -> Response<T>): Flow<Resource<T>> =
+    inline fun <T> handleResponse(networkConnectivity: Network, crossinline request: suspend () -> Response<T>): Flow<Resource<T>> =
         channelFlow {
             var response: Response<T>? = null
             try {
-                response = request.invoke()
-
-                if (response.isSuccessful) {
+                if (networkConnectivity.isConnected().not()) {
                     send(
-                        Resource.success(
-                            data = response.body()
+                        Resource.error(error = ErrorResponse(
+                                errorCode = -1,
+                                message = NETWORK_ERROR
+                            )
                         )
                     )
                 } else {
-                    send(
-                        response.defaultServerError()
-                    )
+                    response = request.invoke()
+
+                    if (response.isSuccessful) {
+                        send(
+                            Resource.success(
+                                data = response.body()
+                            )
+                        )
+                    } else {
+                        send(
+                            response.defaultServerError()
+                        )
+                    }
                 }
             } catch (e: UnknownHostException) {
                 send(

@@ -19,7 +19,7 @@ import com.example.userapp.core.utils.delayClick
 import com.example.userapp.databinding.FragmentUserSearchBinding
 import com.example.userapp.ui.usersearch.domain.UserSearchActionState
 import com.example.userapp.ui.usersearch.domain.UserSearchViewState
-import com.example.userapp.ui.util.FragmentDataTransferKeyword
+import com.example.userapp.core.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -140,9 +140,8 @@ class UserSearchFragment : BaseFragment<FragmentUserSearchBinding>(
     private var isLoading = false
 
     private fun setupRecyclerView() {
-        val visibleThreshold = 5
         binding.githubUserRecyclerView.setHasFixedSize(true)
-        binding.githubUserRecyclerView.setItemViewCacheSize(30)
+        binding.githubUserRecyclerView.setItemViewCacheSize(UserSearch.RECYCLER_VIEW_CACHE_SIZE)
 
         binding.githubUserRecyclerView.clearOnScrollListeners()
         binding.githubUserRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -151,7 +150,8 @@ class UserSearchFragment : BaseFragment<FragmentUserSearchBinding>(
                 val layoutManager = recyclerView.layoutManager as LinearLayoutManager
                 val totalItemCount = layoutManager.itemCount
                 val lastVisibleItem = layoutManager.findLastVisibleItemPosition()
-                if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+                if (!isLoading && totalItemCount <=
+                    (lastVisibleItem + UserSearch.LOAD_MORE_TRIGGER_THRESHOLD)) {
                     disableLoadMore()
                     loadMoreData()
                 }
@@ -168,10 +168,8 @@ class UserSearchFragment : BaseFragment<FragmentUserSearchBinding>(
         binding.searchEditText.removeTextChangedListener(null)
         binding.searchEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                val text = s?.toString()?.trim() ?: ""
-                // Harf ve rakam validasyonu yap, sadece A-Z, a-z, 0-9, ve boşluk
-                val filteredText = text.replace("[^a-zA-Z0-9\\s]".toRegex(), "")
-                // Text gecikmeli olarak ViewModel'e gönder
+                val text = s?.toString()?.trim() ?: EMPTY
+                val filteredText = text.replace(UserSearch.SEARCH_TEXT_REGEX.toRegex(), "")
                 if (viewModel.userSearchViewState.searchText != filteredText) {
                     viewModel.updateSearchText(filteredText)
                 }

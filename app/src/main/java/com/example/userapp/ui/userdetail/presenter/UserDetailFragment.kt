@@ -15,7 +15,7 @@ import com.example.userapp.core.utils.delayClick
 import com.example.userapp.databinding.FragmentUserDetailBinding
 import com.example.userapp.ui.userdetail.domain.UserDetailActionState
 import com.example.userapp.ui.userdetail.domain.UserDetailViewState
-import com.example.userapp.ui.util.FragmentDataTransferKeyword
+import com.example.userapp.core.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

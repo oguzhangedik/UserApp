@@ -13,10 +13,10 @@ import com.example.userapp.core.netwok.data.Status
 import com.example.userapp.core.platform.viewmodel.AppViewAction
 import com.example.userapp.core.platform.viewmodel.AppViewModel
 import com.example.userapp.core.platform.viewmodel.AppViewState
-import com.example.userapp.model.UiState
 import com.example.userapp.ui.usersearch.domain.UserSearchActionState
 import com.example.userapp.ui.usersearch.domain.UserSearchViewAction
 import com.example.userapp.ui.usersearch.domain.UserSearchViewState
+import com.example.userapp.core.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
@@ -80,7 +80,7 @@ class UserSearchViewModel @Inject constructor(
                         }
 
                     } ?: run {
-                        showCustomError("Something went wrong")
+                        showCustomError(SOMETHING_WENT_WRONG)
                     }
                     setLoading(false)
                 }
@@ -92,31 +92,26 @@ class UserSearchViewModel @Inject constructor(
         return when (val action = viewAction as UserSearchViewAction) {
             is UserSearchViewAction.OnClearAction -> {
                 userSearchViewState.copy(
-                    uiState = UiState.SUCCESS,
                     userSearchActionState = UserSearchActionState.NULL
                 )
             }
             is UserSearchViewAction.OnEnableLoadMoreAction -> {
                 userSearchViewState.copy(
-                    uiState = UiState.SUCCESS,
                     userSearchActionState = UserSearchActionState.ENABLE_LOAD_MORE_ACTION
                 )
             }
             is UserSearchViewAction.OnDisableLoadMoreAction -> {
                 userSearchViewState.copy(
-                    uiState = UiState.SUCCESS,
                     userSearchActionState = UserSearchActionState.DISABLE_LOAD_MORE_ACTION
                 )
             }
             is UserSearchViewAction.OnEnableRefreshButtonAndClearRecyclerViewAction -> {
                 userSearchViewState.copy(
-                    uiState = UiState.SUCCESS,
                     userSearchActionState = UserSearchActionState.ENABLE_REFRESH_BUTTON_AND_CLEAR_RECYCLER_VIEW
                 )
             }
             is UserSearchViewAction.OnGithubUsers -> {
                 userSearchViewState.copy(
-                    uiState = UiState.SUCCESS,
                     githubUserSearchRequest = action.githubUserSearchRequest,
                     githubUsers = action.githubUsers,
                     userSearchActionState = UserSearchActionState.GET_GITHUB_USERS
@@ -125,7 +120,6 @@ class UserSearchViewModel @Inject constructor(
 
             is UserSearchViewAction.OnLoadMoreGithubUsers -> {
                 userSearchViewState.copy(
-                    uiState = UiState.SUCCESS,
                     githubUserSearchRequest = action.githubUserSearchRequest,
                     githubUsers = action.githubUsers,
                     userSearchActionState = UserSearchActionState.LOAD_MORE_GITHUB_USERS
@@ -134,7 +128,6 @@ class UserSearchViewModel @Inject constructor(
 
             is UserSearchViewAction.OnSearchNewGithubUsers -> {
                 userSearchViewState.copy(
-                    uiState = UiState.SUCCESS,
                     searchText = action.searchText,
                     githubUserSearchRequest = null,
                     githubUsers = null,
@@ -145,7 +138,6 @@ class UserSearchViewModel @Inject constructor(
 
             is UserSearchViewAction.OnGithubUserFavoriteStateUpdate -> {
                 userSearchViewState.copy(
-                    uiState = UiState.SUCCESS,
                     lastFavoriteUpdateGithubUser = action.githubUser,
                     userSearchActionState =
                     if(action.githubUser.isFavorite == true)
@@ -175,7 +167,7 @@ class UserSearchViewModel @Inject constructor(
             if (githubUserListItems.isEmpty()) {
                 githubUserListItems.add(NoItemOfGithubUser())
                 sendAction(viewAction = UserSearchViewAction.OnDisableLoadMoreAction)
-            } else if (newGithubUsers.size == 30) {
+            } else if (newGithubUsers.size == UserSearch.LIST_PAGE_ITEM_COUNT) {
                 githubUserListItems.add(ProgressItemOfGithubUser())
                 sendAction(viewAction = UserSearchViewAction.OnEnableLoadMoreAction)
             } else {
@@ -196,10 +188,12 @@ class UserSearchViewModel @Inject constructor(
                 val githubUserListItems = ArrayList<BaseListItemOfGithubUser>()
                 githubUserListItems.addAll(stateGithubUserList)
                 githubUserListItems.addAll(newGithubUsers)
-                if (newGithubUsers.size == 30) {
+                if (newGithubUsers.size == UserSearch.LIST_PAGE_ITEM_COUNT) {
                     githubUserListItems.add(ProgressItemOfGithubUser())
+                    sendAction(viewAction = UserSearchViewAction.OnEnableLoadMoreAction)
+                } else {
+                    sendAction(viewAction = UserSearchViewAction.OnDisableLoadMoreAction)
                 }
-                sendAction(viewAction = UserSearchViewAction.OnEnableLoadMoreAction)
                 sendAction(
                     viewAction = UserSearchViewAction.OnLoadMoreGithubUsers(
                         githubUserSearchRequest = newRequest,
@@ -216,7 +210,7 @@ class UserSearchViewModel @Inject constructor(
     fun updateSearchText(newText: String) {
         searchTextDebounceJob?.cancel()
         searchTextDebounceJob = viewModelScope.launch(coroutine) {
-            delay(2000L)
+            delay(UserSearch.UPDATE_SEARCH_TEXT_JOB_DELAY)
             newText.trim().let {
                 if (it.isNotEmpty() && it.isNotBlank()) {
                     sendAction(viewAction = UserSearchViewAction.OnEnableLoadMoreAction)
@@ -233,7 +227,7 @@ class UserSearchViewModel @Inject constructor(
     fun loadMoreData() {
         loadMoreDebounceJob?.cancel()
         loadMoreDebounceJob = viewModelScope.launch(coroutine) {
-            delay(1000L)
+            delay(UserSearch.LOAD_MORE_JOB_DELAY)
             searchGithubUsers()
         }
     }

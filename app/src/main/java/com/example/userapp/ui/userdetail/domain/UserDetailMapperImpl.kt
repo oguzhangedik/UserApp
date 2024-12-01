@@ -5,6 +5,8 @@ import com.example.userapp.core.data.dto.user.GithubUser
 import com.example.userapp.core.data.dto.user.GithubUserDetail
 import com.example.userapp.core.data.dto.user.UserDetailHeaderItem
 import com.example.userapp.core.data.dto.user.UserDetailListItem
+import com.example.userapp.core.utils.*
+
 
 class UserDetailMapperImpl : UserDetailMapper {
     override fun map(
@@ -15,51 +17,34 @@ class UserDetailMapperImpl : UserDetailMapper {
 
         userDetails.add(
             UserDetailHeaderItem(
-                avatarUrl = githubUserDetail.avatarUrl ?: "",
+                avatarUrl = githubUserDetail.avatarUrl ?: EMPTY,
                 isFavorite = githubUser.isFavorite ?: false,
-                name = githubUserDetail.name ?: "not specified",
-                company = githubUserDetail.company ?: "not specified",
-                publicRepos = githubUserDetail.publicRepos?.toString() ?: "0",
-                followers = githubUserDetail.followers?.toString() ?: "0",
-                following = githubUserDetail.following?.toString() ?: "0"
+                name = githubUserDetail.name ?: NOT_SPECIFIED,
+                company = githubUserDetail.company ?: NOT_SPECIFIED,
+                publicRepos = githubUserDetail.publicRepos?.toString() ?: ZERO_TEXT,
+                followers = githubUserDetail.followers?.toString() ?: ZERO_TEXT,
+                following = githubUserDetail.following?.toString() ?: ZERO_TEXT
             )
         )
 
-        githubUserDetail.bio?.let { bio->
-            val bioListItem = UserDetailListItem(
-                title = "BIO",
-                description = bio
-            )
-            userDetails.add(bioListItem)
+        arrayListOf<Pair<String, String?>>().apply {
+            add(Pair(UserDetailListItemKey.BIO, githubUserDetail.bio))
+            add(Pair(UserDetailListItemKey.EMAIL, githubUserDetail.email))
+            add(Pair(UserDetailListItemKey.BLOG, githubUserDetail.blog))
+            add(Pair(UserDetailListItemKey.LOCATION, githubUserDetail.location))
+            add(Pair(UserDetailListItemKey.TWITTER, githubUserDetail.twitterUsername))
         }
-        githubUserDetail.email?.let { email->
-            val listItem = UserDetailListItem(
-                title = "EMAIL",
-                description = email
-            )
-            userDetails.add(listItem)
-        }
-        githubUserDetail.blog?.let { blog->
-            val listItem = UserDetailListItem(
-                title = "BLOG",
-                description = blog
-            )
-            userDetails.add(listItem)
-        }
-        githubUserDetail.location?.let { location->
-            val listItem = UserDetailListItem(
-                title = "LOCATION",
-                description = location
-            )
-            userDetails.add(listItem)
-        }
-        githubUserDetail.twitterUsername?.let { twitterUsername->
-            val listItem = UserDetailListItem(
-                title = "TWITTER",
-                description = twitterUsername
-            )
-            userDetails.add(listItem)
-        }
+            .filter { it.second.isNullOrBlank().not() }
+            .forEach { userDetail ->
+                userDetail.second?.trim()?.let { userDetailDescription ->
+                    val userDetailListItem = UserDetailListItem(
+                        title = userDetail.first,
+                        description = userDetailDescription
+                    )
+                    userDetails.add(userDetailListItem)
+                }
+            }
+
         return userDetails
     }
 }

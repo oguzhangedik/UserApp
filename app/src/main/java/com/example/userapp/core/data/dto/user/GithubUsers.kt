@@ -4,17 +4,17 @@ import android.os.Parcelable
 import android.view.View
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.userapp.core.utils.*
 import com.squareup.moshi.Json
-import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Entity
 data class GithubUserSearchRequest(
-    val textInUserNameToSearch: String = "A",
-    val page: Int = 0,
-    val perPageUserCount: Int = 30
+    val textInUserNameToSearch: String = EMPTY,
+    val page: Int = ZER0,
+    val perPageUserCount: Int = UserSearch.LIST_PAGE_ITEM_COUNT
 ) {
-    @PrimaryKey(autoGenerate = true) var dbId: Long = 0
+    @PrimaryKey(autoGenerate = true) var dbId: Long = ZER0.toLong()
 }
 
 @Parcelize
@@ -54,7 +54,7 @@ data class GithubUserResponse(
     var isFavorite : Boolean? = false
 }
 
-data class NoItemOfGithubUser(val noItemMessage : String = "User not found") : BaseListItemOfGithubUser()
+data class NoItemOfGithubUser(val noItemMessage : String = UserSearch.USER_NOT_FOUND) : BaseListItemOfGithubUser()
 
 class ProgressItemOfGithubUser : BaseListItemOfGithubUser()
 
@@ -107,7 +107,7 @@ data class GithubUserDetail(
     @Json(name = "followers") val followers: Int?,
     @Json(name = "following") val following: Int?
 ) : Parcelable {
-    @PrimaryKey(autoGenerate = true) var dbId: Long = 0
+    @PrimaryKey(autoGenerate = true) var dbId: Long = ZER0.toLong()
 }
 
 @Parcelize

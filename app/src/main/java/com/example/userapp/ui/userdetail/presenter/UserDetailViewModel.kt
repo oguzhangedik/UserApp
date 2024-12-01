@@ -11,11 +11,11 @@ import com.example.userapp.core.netwok.data.Status
 import com.example.userapp.core.platform.viewmodel.AppViewAction
 import com.example.userapp.core.platform.viewmodel.AppViewModel
 import com.example.userapp.core.platform.viewmodel.AppViewState
-import com.example.userapp.model.UiState
 import com.example.userapp.ui.userdetail.domain.UserDetailActionState
 import com.example.userapp.ui.userdetail.domain.UserDetailMapper
 import com.example.userapp.ui.userdetail.domain.UserDetailViewAction
 import com.example.userapp.ui.userdetail.domain.UserDetailViewState
+import com.example.userapp.core.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -62,13 +62,13 @@ class UserDetailViewModel @Inject constructor(
                                userDetails = userDetailMapper.map(githubUser, githubUserDetail)
                            ))
                        } ?: run {
-                           showCustomError("User detail is null")
+                           showCustomError(UserDetail.USER_DETAIL_EMPTY)
                        }
                    } else {
                        userDetailResponse.error?.message?.let { errorMessage ->
                            showCustomError(errorMessage)
                        } ?: run {
-                           showCustomError("Something went wrong")
+                           showCustomError(SOMETHING_WENT_WRONG)
                        }
                        setLoading(false)
                    }
@@ -84,7 +84,6 @@ class UserDetailViewModel @Inject constructor(
         return when (val action = viewAction as UserDetailViewAction) {
             is UserDetailViewAction.OnGithubUserDetail -> {
                 userDetailViewState.copy(
-                    uiState = UiState.SUCCESS,
                     githubUser = action.githubUser,
                     githubUserDetail = action.githubUserDetail,
                     userDetails = action.userDetails,
@@ -93,7 +92,6 @@ class UserDetailViewModel @Inject constructor(
             }
             is UserDetailViewAction.OnFavoriteStateChanged -> {
                 userDetailViewState.copy(
-                    uiState = UiState.SUCCESS,
                     githubUser = action.githubUser,
                     userDetailActionState = if(action.githubUser?.isFavorite == true)
                         UserDetailActionState.FAVORITE_STATE_CHANGED_TO_FAVORITE

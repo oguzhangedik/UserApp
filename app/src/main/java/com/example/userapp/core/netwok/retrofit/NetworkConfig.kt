@@ -3,10 +3,10 @@ package com.example.userapp.core.netwok.retrofit
 import okhttp3.HttpUrl
 
 interface NetworkConfig {
-    fun getHostUrl(httpUrl: HttpUrl, shouldMakeBaseUrl: Boolean): HttpUrl
+    fun getHostUrl(httpUrl: HttpUrl): HttpUrl
     fun getBaseUrl(): String
-    fun getdefaultCallTimeoutMillis(): Long
-    fun getdefaultConnectTimeoutMillis(): Long
-    fun getdefaultReadTimeoutMillis(): Long
-    fun getdefaultWriteTimeoutMillis(): Long
+    fun getDefaultCallTimeoutMillis(): Long
+    fun getDefaultConnectTimeoutMillis(): Long
+    fun getDefaultReadTimeoutMillis(): Long
+    fun getDefaultWriteTimeoutMillis(): Long
 }

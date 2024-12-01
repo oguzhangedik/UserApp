@@ -47,10 +47,10 @@ object NetworkModule {
             .addInterceptor(loggingInterceptor)
             .addInterceptor(authenticationInterceptor)
             .addInterceptor(ChuckerInterceptor(appContext))
-            .callTimeout(networkConfig.getdefaultCallTimeoutMillis(), TimeUnit.MILLISECONDS)
-            .connectTimeout(networkConfig.getdefaultConnectTimeoutMillis(), TimeUnit.MILLISECONDS)
-            .readTimeout(networkConfig.getdefaultReadTimeoutMillis(), TimeUnit.MILLISECONDS)
-            .writeTimeout(networkConfig.getdefaultWriteTimeoutMillis(), TimeUnit.MILLISECONDS)
+            .callTimeout(networkConfig.getDefaultCallTimeoutMillis(), TimeUnit.MILLISECONDS)
+            .connectTimeout(networkConfig.getDefaultConnectTimeoutMillis(), TimeUnit.MILLISECONDS)
+            .readTimeout(networkConfig.getDefaultReadTimeoutMillis(), TimeUnit.MILLISECONDS)
+            .writeTimeout(networkConfig.getDefaultWriteTimeoutMillis(), TimeUnit.MILLISECONDS)
             .build()
     }
 
@@ -77,10 +77,10 @@ object NetworkModule {
             .addInterceptor(HttpRequestInterceptor(networkConfig))
             .addInterceptor(loggingInterceptor)
             .addInterceptor(ChuckerInterceptor(appContext))
-            .callTimeout(networkConfig.getdefaultCallTimeoutMillis(), TimeUnit.MILLISECONDS)
-            .connectTimeout(networkConfig.getdefaultConnectTimeoutMillis(), TimeUnit.MILLISECONDS)
-            .readTimeout(networkConfig.getdefaultReadTimeoutMillis(), TimeUnit.MILLISECONDS)
-            .writeTimeout(networkConfig.getdefaultWriteTimeoutMillis(), TimeUnit.MILLISECONDS)
+            .callTimeout(networkConfig.getDefaultCallTimeoutMillis(), TimeUnit.MILLISECONDS)
+            .connectTimeout(networkConfig.getDefaultConnectTimeoutMillis(), TimeUnit.MILLISECONDS)
+            .readTimeout(networkConfig.getDefaultReadTimeoutMillis(), TimeUnit.MILLISECONDS)
+            .writeTimeout(networkConfig.getDefaultWriteTimeoutMillis(), TimeUnit.MILLISECONDS)
             .build()
     }
 
