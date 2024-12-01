@@ -48,6 +48,7 @@
                 android:maxLines="1"
                 android:padding="14dp"
                 android:hint="@string/search_user"
+                android:textColorHint="@color/dark_gray"
                 android:inputType="text"
                 android:text="@{viewModel.userSearchViewState.searchText}" />
 

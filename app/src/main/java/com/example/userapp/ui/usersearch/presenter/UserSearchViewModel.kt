@@ -7,7 +7,7 @@ import com.example.userapp.core.data.dto.user.GithubUserSearchRequest
 import com.example.userapp.core.data.dto.user.NoItemOfGithubUser
 import com.example.userapp.core.data.dto.user.ProgressItemOfGithubUser
 import com.example.userapp.core.data.local.LocalData
-import com.example.userapp.core.data.usecase.githubuser.GithubUserUseCase
+import com.example.userapp.core.data.usecase.GithubUserUseCase
 import com.example.userapp.core.extensions.safeLet
 import com.example.userapp.core.netwok.data.Status
 import com.example.userapp.core.platform.viewmodel.AppViewAction

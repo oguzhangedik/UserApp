@@ -1,4 +1,4 @@
-package com.example.userapp.core.data.usecase.githubuser
+package com.example.userapp.core.data.usecase
 
 import com.example.userapp.core.data.dto.user.GithubUserResponse
 import com.example.userapp.core.data.dto.user.GithubUserSearchRequest

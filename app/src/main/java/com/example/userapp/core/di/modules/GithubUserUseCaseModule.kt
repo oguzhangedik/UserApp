@@ -2,12 +2,10 @@ package com.example.userapp.core.di.modules
 
 import com.example.userapp.core.data.local.LocalData
 import com.example.userapp.core.data.repository.GithubUserRepository
-import com.example.userapp.core.data.usecase.githubuser.GithubUserDetailUseCase
-import com.example.userapp.core.data.usecase.githubuser.GithubUserDetailUseCaseImpl
-import com.example.userapp.core.data.usecase.githubuser.GithubUserUseCase
-import com.example.userapp.core.data.usecase.githubuser.GithubUserUseCaseImpl
-import com.example.userapp.ui.userdetail.domain.UserDetailMapper
-import com.example.userapp.ui.userdetail.domain.UserDetailMapperImpl
+import com.example.userapp.core.data.usecase.GithubUserDetailUseCase
+import com.example.userapp.core.data.usecase.GithubUserDetailUseCaseImpl
+import com.example.userapp.core.data.usecase.GithubUserUseCase
+import com.example.userapp.core.data.usecase.GithubUserUseCaseImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

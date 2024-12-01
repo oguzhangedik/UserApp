@@ -5,7 +5,7 @@ import com.example.userapp.core.data.dto.user.GithubUser
 import com.example.userapp.core.data.dto.user.GithubUserDetailRequest
 import com.example.userapp.core.data.dto.user.UserDetailHeaderItem
 import com.example.userapp.core.data.local.LocalData
-import com.example.userapp.core.data.usecase.githubuser.GithubUserDetailUseCase
+import com.example.userapp.core.data.usecase.GithubUserDetailUseCase
 import com.example.userapp.core.extensions.safeLet
 import com.example.userapp.core.netwok.data.Status
 import com.example.userapp.core.platform.viewmodel.AppViewAction
