@@ -5,6 +5,7 @@
     <string name="progressDialog_title">Başlık</string>
     <!-- Dialogs-->
     <string name="ok_text">Tamam</string>
-    <string name="cancel">İptal</string>
+    <string name="cancel_text">İptal</string>
+    <string name="search_user">Search User</string>
 
 </resources>

@@ -54,7 +54,7 @@ data class GithubUserResponse(
     var isFavorite : Boolean? = false
 }
 
-data class NoItemOfGithubUser(val noItemMessage : String = "Kullanıcı Bulunamadı.") : BaseListItemOfGithubUser()
+data class NoItemOfGithubUser(val noItemMessage : String = "User not found") : BaseListItemOfGithubUser()
 
 class ProgressItemOfGithubUser : BaseListItemOfGithubUser()
 

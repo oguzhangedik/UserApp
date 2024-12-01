@@ -71,10 +71,11 @@ class UserSearchViewModel @Inject constructor(
                 } else {
                     searchUserResponse.error?.message?.let { errorMessage ->
                         showCustomError(errorMessage)
-                        sendAction(viewAction = UserSearchViewAction.OnAllowLoadMoreAction)
                         if (isFirstRequest()) {
+                            sendAction(viewAction = UserSearchViewAction.OnDisableLoadMoreAction)
                             sendAction(viewAction = UserSearchViewAction.OnEnableRefreshButtonAndClearRecyclerViewAction)
                         } else {
+                            sendAction(viewAction = UserSearchViewAction.OnEnableLoadMoreAction)
                             sendAction(viewAction = UserSearchViewAction.OnClearAction)
                         }
 
@@ -95,10 +96,16 @@ class UserSearchViewModel @Inject constructor(
                     userSearchActionState = UserSearchActionState.NULL
                 )
             }
-            is UserSearchViewAction.OnAllowLoadMoreAction -> {
+            is UserSearchViewAction.OnEnableLoadMoreAction -> {
                 userSearchViewState.copy(
                     uiState = UiState.SUCCESS,
-                    userSearchActionState = UserSearchActionState.ALLOW_LOAD_MORE_ACTION
+                    userSearchActionState = UserSearchActionState.ENABLE_LOAD_MORE_ACTION
+                )
+            }
+            is UserSearchViewAction.OnDisableLoadMoreAction -> {
+                userSearchViewState.copy(
+                    uiState = UiState.SUCCESS,
+                    userSearchActionState = UserSearchActionState.DISABLE_LOAD_MORE_ACTION
                 )
             }
             is UserSearchViewAction.OnEnableRefreshButtonAndClearRecyclerViewAction -> {
@@ -167,10 +174,13 @@ class UserSearchViewModel @Inject constructor(
             val githubUserListItems = ArrayList<BaseListItemOfGithubUser>(newGithubUsers)
             if (githubUserListItems.isEmpty()) {
                 githubUserListItems.add(NoItemOfGithubUser())
+                sendAction(viewAction = UserSearchViewAction.OnDisableLoadMoreAction)
             } else if (newGithubUsers.size == 30) {
                 githubUserListItems.add(ProgressItemOfGithubUser())
+                sendAction(viewAction = UserSearchViewAction.OnEnableLoadMoreAction)
+            } else {
+                sendAction(viewAction = UserSearchViewAction.OnDisableLoadMoreAction)
             }
-            sendAction(viewAction = UserSearchViewAction.OnAllowLoadMoreAction)
             sendAction(
                 viewAction = UserSearchViewAction.OnGithubUsers(
                     githubUserSearchRequest = newRequest,
@@ -189,7 +199,7 @@ class UserSearchViewModel @Inject constructor(
                 if (newGithubUsers.size == 30) {
                     githubUserListItems.add(ProgressItemOfGithubUser())
                 }
-                sendAction(viewAction = UserSearchViewAction.OnAllowLoadMoreAction)
+                sendAction(viewAction = UserSearchViewAction.OnEnableLoadMoreAction)
                 sendAction(
                     viewAction = UserSearchViewAction.OnLoadMoreGithubUsers(
                         githubUserSearchRequest = newRequest,
@@ -209,7 +219,7 @@ class UserSearchViewModel @Inject constructor(
             delay(2000L)
             newText.trim().let {
                 if (it.isNotEmpty() && it.isNotBlank()) {
-                    sendAction(viewAction = UserSearchViewAction.OnAllowLoadMoreAction)
+                    sendAction(viewAction = UserSearchViewAction.OnEnableLoadMoreAction)
                     sendAction(
                         viewAction = UserSearchViewAction.OnSearchNewGithubUsers(
                             searchText = it

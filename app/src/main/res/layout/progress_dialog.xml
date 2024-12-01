@@ -142,7 +142,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:text="@string/cancel"
+                android:text="@string/cancel_text"
                 android:visibility="gone"
                 android:textAllCaps="true"
                 android:clickable="true"

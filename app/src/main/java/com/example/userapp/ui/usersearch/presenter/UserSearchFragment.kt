@@ -85,10 +85,7 @@ class UserSearchFragment : BaseFragment<FragmentUserSearchBinding>(
                         }
                     }
                     UserSearchActionState.LOAD_MORE_GITHUB_USERS -> {
-                        updateRecyclerViewAndAllowLoadMore(githubUsers)
-                    }
-                    UserSearchActionState.ALLOW_LOAD_MORE_ACTION -> {
-                        isLoading = false
+                        updateRecyclerView(githubUsers)
                     }
                     UserSearchActionState.SEARCH_NEW_GITHUB_USERS -> {
                         viewModel.searchGithubUsers()
@@ -99,21 +96,26 @@ class UserSearchFragment : BaseFragment<FragmentUserSearchBinding>(
                             githubUsers, lastFavoriteUpdateGithubUser)
                     }
                     UserSearchActionState.ENABLE_REFRESH_BUTTON_AND_CLEAR_RECYCLER_VIEW -> {
-                        updateRecyclerViewAndAllowLoadMore(githubUsers)
+                        updateRecyclerView(githubUsers)
                         binding.refreshImageView.visibility = View.VISIBLE
+                    }
+                    UserSearchActionState.ENABLE_LOAD_MORE_ACTION -> {
+                        enableLoadMore()
+                    }
+                    UserSearchActionState.DISABLE_LOAD_MORE_ACTION -> {
+                        disableLoadMore()
                     }
                 }
             }
         }
     }
 
-    private fun updateRecyclerViewAndAllowLoadMore(githubUsers : ArrayList<BaseListItemOfGithubUser>?) {
+    private fun updateRecyclerView(githubUsers : ArrayList<BaseListItemOfGithubUser>?) {
         githubUsers?.let { mappedUserList ->
             githubUserAdapter?.updateData(mappedUserList)
         } ?: run {
             githubUserAdapter?.clear()
         }
-        isLoading = false
     }
 
     private fun updateRecyclerViewCurrentGuestUserFavoriteStatue(
@@ -127,11 +129,18 @@ class UserSearchFragment : BaseFragment<FragmentUserSearchBinding>(
         }
     }
 
+    private fun enableLoadMore() {
+        isLoading = false
+    }
+    private fun disableLoadMore() {
+        isLoading = true
+    }
+
+
     private var isLoading = false
-    private var isLastPage = false
-    private val visibleThreshold = 5
 
     private fun setupRecyclerView() {
+        val visibleThreshold = 5
         binding.githubUserRecyclerView.setHasFixedSize(true)
         binding.githubUserRecyclerView.setItemViewCacheSize(30)
 
@@ -142,9 +151,9 @@ class UserSearchFragment : BaseFragment<FragmentUserSearchBinding>(
                 val layoutManager = recyclerView.layoutManager as LinearLayoutManager
                 val totalItemCount = layoutManager.itemCount
                 val lastVisibleItem = layoutManager.findLastVisibleItemPosition()
-                if (!isLoading && !isLastPage && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+                if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+                    disableLoadMore()
                     loadMoreData()
-                    isLoading = true
                 }
             }
         })

@@ -30,14 +30,14 @@ fun Context.showDialog(
 }
 
 fun AlertDialog.Builder.positiveButton(
-    text: String = "ok_text",
+    text: String = context.getString(R.string.ok_text),
     handleClick: (i: Int) -> Unit = {}
 ) {
     this.setPositiveButton(text) { _, i -> handleClick(i) }
 }
 
 fun AlertDialog.Builder.negativeButton(
-    text: String = "cancel_text",
+    text: String = context.getString(R.string.cancel_text),
     handleClick: (i: Int) -> Unit = {}
 ) {
     this.setNegativeButton(text) { _, i -> handleClick(i) }
