@@ -25,10 +25,6 @@ object Versions {
         const val cardView = "1.0.0"
     }
 
-    object Koin {
-        const val koinVersion = "3.1.6"
-    }
-
     object Navigation {
         const val navigationVersion = "2.7.7"
         const val runTimeNavigation = navigationVersion
@@ -57,15 +53,6 @@ object Versions {
         const val firebaseCrashlytics = "18.2.10"
     }
 
-    object AdjustSdk {
-        const val adjust = "4.33.5"
-        const val installreferrer = "2.2"
-    }
-
-    object Facebook {
-        const val login = "12.0.0"
-    }
-
     object DI {
         const val hilt = "2.50"
     }
@@ -80,12 +67,6 @@ object Versions {
         const val loggingInterceptor = okHttp
         const val moshi = "1.15.1"
         const val retrofitMoshi = "2.9.0"
-    }
-
-    object Google {
-        const val location = "19.0.0"
-        const val playServicesMaps = "18.0.2"
-        const val mapUtils = "2.2.5"
     }
 
     object Tools {
@@ -113,7 +94,6 @@ object Versions {
         const val mockKVersion = "1.9.3"
         const val coreTestingVersion = "2.0.0"
         const val hiltTesting = "2.28-alpha"
-        const val hiltTestCompiler = hiltTesting
     }
 
     object Chucker {
@@ -132,5 +112,4 @@ object Versions {
         const val viewPager = "1.1.0"
         const val viewPagerIndicator = "2.1.6"
     }
-
 }

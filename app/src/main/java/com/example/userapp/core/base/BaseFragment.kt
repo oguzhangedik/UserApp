@@ -134,7 +134,7 @@ abstract class BaseFragment<DB : ViewDataBinding>(
     internal fun showSoftInput() {
         val inputManager =
             requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
+        inputManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0)
     }
 
     fun showProgressView() {
