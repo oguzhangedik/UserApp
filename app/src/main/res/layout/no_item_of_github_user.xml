@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:text="Item not found"
-        android:textSize="20sp"
+        android:textSize="@dimen/_20sp"
         android:textStyle="bold"
         android:text="@{data.noItemMessage}" />
 
