@@ -5,7 +5,8 @@ With this application, you can find the users and their details that you are loo
 You can display details such as the bio, blog, location and company of the user and can favorite them locally.
 <br><br>
 
-
+## Preview App
+![preview-app](https://github.com/oguzhangedik/UserApp/blob/master/readmeImages/allscreen.gif)
 
 ## Libraries & Tools 🛠️
 
