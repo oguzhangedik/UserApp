@@ -23,6 +23,7 @@ You can display details such as the bio, blog, location and company of the user 
     - [View Binding](https://developer.android.com/topic/libraries/view-binding)
 - [Retrofit](https://square.github.io/retrofit)
 - [OkHttp](https://github.com/square/okhttp)
+- [Chucker](https://github.com/ChuckerTeam/chucker)
 - [Glide](https://github.com/bumptech/glide)
 
 
@@ -30,7 +31,8 @@ You can display details such as the bio, blog, location and company of the user 
 <p align="left">
 <img align="left" src="https://github.com/oguzhangedik/UserApp/blob/master/readmeImages/search_screen.jpeg" width="250" height="530"/>
 <img align="left" src="https://github.com/oguzhangedik/UserApp/blob/master/readmeImages/list_screen.jpeg" width="250" height="530"/>
-<img align="left" src="https://github.com/oguzhangedik/UserApp/blob/master/readmeImages/detail_screen.jpeg" width="250" height="530"/></p>
+<img align="left" src="https://github.com/oguzhangedik/UserApp/blob/master/readmeImages/detail_screen.jpeg" width="250" height="530"/>
+<img align="left" src="https://github.com/oguzhangedik/UserApp/blob/master/readmeImages/network_screen.jpeg" width="250" height="530"/></p>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 ## Architecture
