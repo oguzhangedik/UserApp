@@ -33,7 +33,7 @@ You can display details such as the bio, blog, location and company of the user 
 <img align="left" src="https://github.com/oguzhangedik/UserApp/blob/master/readmeImages/list_screen.jpeg" width="250" height="530"/>
 <img align="left" src="https://github.com/oguzhangedik/UserApp/blob/master/readmeImages/detail_screen.jpeg" width="250" height="530"/>
 <img align="left" src="https://github.com/oguzhangedik/UserApp/blob/master/readmeImages/network_screen.jpeg" width="250" height="530"/></p>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 ## Architecture
 ![architecture](https://github.com/oguzhangedik/UserApp/blob/master/readmeImages/architecture.png)
