@@ -6,6 +6,7 @@ import com.example.userapp.core.data.dto.user.GithubUser
 import com.example.userapp.core.data.dto.user.GithubUserSearchRequest
 import com.example.userapp.core.data.dto.user.NoItemOfGithubUser
 import com.example.userapp.core.data.dto.user.ProgressItemOfGithubUser
+import com.example.userapp.core.data.dto.user.toGithubUsers
 import com.example.userapp.core.data.local.LocalData
 import com.example.userapp.core.data.usecase.GithubUserUseCase
 import com.example.userapp.core.extensions.safeLet
@@ -54,7 +55,7 @@ class UserSearchViewModel @Inject constructor(
                     request = newSearchRequest
                 ).first()
                 if (searchUserResponse.status == Status.SUCCESS) {
-                    searchUserResponse.data?.items?.let { githubUsers ->
+                    searchUserResponse.data?.items?.toGithubUsers()?.let { githubUsers ->
                         val newDbUserSearchRequestDbId =
                             localRepository.insertGithubUserSearchRequest(newSearchRequest)
                         githubUsers.forEach { githubUser ->

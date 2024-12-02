@@ -1,6 +1,6 @@
 package com.example.userapp.core.data.usecase
 
-import com.example.userapp.core.data.dto.user.GithubUserResponse
+import com.example.userapp.core.data.dto.user.GithubUserSearchDto
 import com.example.userapp.core.data.dto.user.GithubUserSearchRequest
 import com.example.userapp.core.data.local.LocalData
 import com.example.userapp.core.data.repository.GithubUserRepository
@@ -18,7 +18,7 @@ class GithubUserUseCaseImpl @Inject constructor(
     private val coroutine: CoroutineContext
 ) : GithubUserUseCase {
     override suspend fun searchGithubUsers(request: GithubUserSearchRequest)
-    : Flow<Resource<GithubUserResponse?>> = flow {
+    : Flow<Resource<GithubUserSearchDto?>> = flow {
             emit(githubUserRepository.searchGithubUsers(request).first())
         }.flowOn(coroutine)
 }

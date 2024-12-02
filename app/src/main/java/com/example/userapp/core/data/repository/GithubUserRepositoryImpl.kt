@@ -3,7 +3,7 @@ package com.example.userapp.core.data.repository
 import androidx.annotation.WorkerThread
 import com.example.userapp.core.data.dto.user.GithubUserDetail
 import com.example.userapp.core.data.dto.user.GithubUserDetailRequest
-import com.example.userapp.core.data.dto.user.GithubUserResponse
+import com.example.userapp.core.data.dto.user.GithubUserSearchDto
 import com.example.userapp.core.data.dto.user.GithubUserSearchRequest
 import com.example.userapp.core.netwok.Network
 import com.example.userapp.core.netwok.client.AppClient
@@ -19,7 +19,7 @@ class GithubUserRepositoryImpl @Inject constructor(
 ) : GithubUserRepository {
 
     @WorkerThread
-    override suspend fun searchGithubUsers(request: GithubUserSearchRequest): Flow<Resource<GithubUserResponse?>> {
+    override suspend fun searchGithubUsers(request: GithubUserSearchRequest): Flow<Resource<GithubUserSearchDto?>> {
         return handleResponse(networkConnectivity) {
             appClient.searchGithubUsers(request)
         }

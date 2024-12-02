@@ -1,11 +1,10 @@
 package com.example.userapp.core.data.remote
 
 import com.example.userapp.core.data.dto.user.GithubUserDetail
-import com.example.userapp.core.data.dto.user.GithubUserResponse
+import com.example.userapp.core.data.dto.user.GithubUserSearchDto
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
-import retrofit2.http.Query
 import retrofit2.http.QueryMap
 
 interface AppService {
@@ -16,7 +15,7 @@ interface AppService {
     @GET(Api.searchGithubUsers)
     suspend fun searchGithubUsers(
         @QueryMap queryParams: Map<String, String>
-    ): Response<GithubUserResponse?>
+    ): Response<GithubUserSearchDto?>
 
     @GET(Api.githubUserDetail)
     suspend fun githubUserDetail(

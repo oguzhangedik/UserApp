@@ -2,7 +2,7 @@ package com.example.userapp.core.netwok.client
 
 import com.example.userapp.core.data.dto.user.GithubUserDetail
 import com.example.userapp.core.data.dto.user.GithubUserDetailRequest
-import com.example.userapp.core.data.dto.user.GithubUserResponse
+import com.example.userapp.core.data.dto.user.GithubUserSearchDto
 import com.example.userapp.core.data.dto.user.GithubUserSearchRequest
 import com.example.userapp.core.data.remote.AppService
 
@@ -16,7 +16,7 @@ class AppClient @Inject constructor(
 
     suspend fun searchGithubUsers(
         request: GithubUserSearchRequest
-    ): Response<GithubUserResponse?> {
+    ): Response<GithubUserSearchDto?> {
         val queryParams = mapOf(
             "q" to request.textInUserNameToSearch,
             "page" to request.page.toString(),
