@@ -1,6 +1,6 @@
 package com.example.userapp.core.data.usecase
 
-import com.example.userapp.core.data.dto.user.GithubUserDetail
+import com.example.userapp.core.data.dto.user.GithubUserDetailDto
 import com.example.userapp.core.data.dto.user.GithubUserDetailRequest
 import com.example.userapp.core.data.local.LocalData
 import com.example.userapp.core.data.repository.GithubUserRepository
@@ -18,7 +18,7 @@ class GithubUserDetailUseCaseImpl @Inject constructor(
     private val coroutine: CoroutineContext
 ) : GithubUserDetailUseCase {
     override suspend fun githubUserDetail(request: GithubUserDetailRequest)
-    : Flow<Resource<GithubUserDetail?>> = flow {
+    : Flow<Resource<GithubUserDetailDto?>> = flow {
             emit(githubUserRepository.githubUserDetail(request).first())
         }.flowOn(coroutine)
 }

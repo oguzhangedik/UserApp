@@ -49,7 +49,7 @@ class UserDetailViewModel @Inject constructor(
                    ).first()
 
                    if (userDetailResponse.status == Status.SUCCESS) {
-                       userDetailResponse.data?.let { githubUserDetail ->
+                       userDetailResponse.data?.toGithubUserDetail()?.let { githubUserDetail ->
 
                            val dbIdOfGithubUserDetail
                            = localRepository.insertGithubUserDetail(githubUserDetail)

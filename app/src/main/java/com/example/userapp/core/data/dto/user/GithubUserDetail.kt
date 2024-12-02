@@ -4,43 +4,42 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.userapp.core.utils.ZER0
-import com.squareup.moshi.Json
 import kotlinx.parcelize.Parcelize
 
 @Entity
 @Parcelize
 data class GithubUserDetail(
-    @Json(name = "login") val login: String?,
-    @Json(name = "id") val id: Int?,
-    @Json(name = "node_id") val nodeId: String?,
-    @Json(name = "avatar_url") val avatarUrl: String?,
-    @Json(name = "gravatar_id") val gravatarId: String?,
-    @Json(name = "url") val url: String?,
-    @Json(name = "html_url") val htmlUrl: String?,
-    @Json(name = "followers_url") val followersUrl: String?,
-    @Json(name = "following_url") val followingUrl: String?,
-    @Json(name = "gists_url") val gistsUrl: String?,
-    @Json(name = "starred_url") val starredUrl: String?,
-    @Json(name = "subscriptions_url") val subscriptionsUrl: String?,
-    @Json(name = "organizations_url") val organizationsUrl: String?,
-    @Json(name = "repos_url") val reposUrl: String?,
-    @Json(name = "events_url") val eventsUrl: String?,
-    @Json(name = "received_events_url") val receivedEventsUrl: String?,
-    @Json(name = "type") val type: String?,
-    @Json(name = "user_view_type") val userViewType: String?,
-    @Json(name = "site_admin") val siteAdmin: Boolean?,
-    @Json(name = "name") val name: String?,
-    @Json(name = "company") val company: String?,
-    @Json(name = "blog") val blog: String?,
-    @Json(name = "location") val location: String?,
-    @Json(name = "email") val email: String?,
-    @Json(name = "hireable") val hireable: Boolean?,
-    @Json(name = "bio") val bio: String?,
-    @Json(name = "twitter_username") val twitterUsername: String?,
-    @Json(name = "public_repos") val publicRepos: Int?,
-    @Json(name = "public_gists") val publicGists: Int?,
-    @Json(name = "followers") val followers: Int?,
-    @Json(name = "following") val following: Int?
+    val login: String?,
+    val id: Int?,
+    val nodeId: String?,
+    val avatarUrl: String?,
+    val gravatarId: String?,
+    val url: String?,
+    val htmlUrl: String?,
+    val followersUrl: String?,
+    val followingUrl: String?,
+    val gistsUrl: String?,
+    val starredUrl: String?,
+    val subscriptionsUrl: String?,
+    val organizationsUrl: String?,
+    val reposUrl: String?,
+    val eventsUrl: String?,
+    val receivedEventsUrl: String?,
+    val type: String?,
+    val userViewType: String?,
+    val siteAdmin: Boolean?,
+    val name: String?,
+    val company: String?,
+    val blog: String?,
+    val location: String?,
+    val email: String?,
+    val hireable: Boolean?,
+    val bio: String?,
+    val twitterUsername: String?,
+    val publicRepos: Int?,
+    val publicGists: Int?,
+    val followers: Int?,
+    val following: Int?
 ) : Parcelable {
     @PrimaryKey(autoGenerate = true) var dbId: Long = ZER0.toLong()
 }

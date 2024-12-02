@@ -1,7 +1,7 @@
 package com.example.userapp.core.data.repository
 
 import androidx.annotation.WorkerThread
-import com.example.userapp.core.data.dto.user.GithubUserDetail
+import com.example.userapp.core.data.dto.user.GithubUserDetailDto
 import com.example.userapp.core.data.dto.user.GithubUserDetailRequest
 import com.example.userapp.core.data.dto.user.GithubUserSearchDto
 import com.example.userapp.core.data.dto.user.GithubUserSearchRequest
@@ -26,7 +26,7 @@ class GithubUserRepositoryImpl @Inject constructor(
     }
 
     @WorkerThread
-    override suspend fun githubUserDetail(request: GithubUserDetailRequest): Flow<Resource<GithubUserDetail?>> {
+    override suspend fun githubUserDetail(request: GithubUserDetailRequest): Flow<Resource<GithubUserDetailDto?>> {
        return handleResponse(networkConnectivity) {
            appClient.githubUserDetail(request)
        }

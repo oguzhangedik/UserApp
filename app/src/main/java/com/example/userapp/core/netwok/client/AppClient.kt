@@ -1,6 +1,6 @@
 package com.example.userapp.core.netwok.client
 
-import com.example.userapp.core.data.dto.user.GithubUserDetail
+import com.example.userapp.core.data.dto.user.GithubUserDetailDto
 import com.example.userapp.core.data.dto.user.GithubUserDetailRequest
 import com.example.userapp.core.data.dto.user.GithubUserSearchDto
 import com.example.userapp.core.data.dto.user.GithubUserSearchRequest
@@ -27,7 +27,7 @@ class AppClient @Inject constructor(
 
     suspend fun githubUserDetail(
         request: GithubUserDetailRequest
-    ): Response<GithubUserDetail?> {
+    ): Response<GithubUserDetailDto?> {
         return appService.githubUserDetail(request.login)
     }
 }

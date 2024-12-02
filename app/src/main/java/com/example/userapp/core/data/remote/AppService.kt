@@ -1,6 +1,6 @@
 package com.example.userapp.core.data.remote
 
-import com.example.userapp.core.data.dto.user.GithubUserDetail
+import com.example.userapp.core.data.dto.user.GithubUserDetailDto
 import com.example.userapp.core.data.dto.user.GithubUserSearchDto
 import retrofit2.Response
 import retrofit2.http.GET
@@ -20,5 +20,5 @@ interface AppService {
     @GET(Api.githubUserDetail)
     suspend fun githubUserDetail(
         @Path("login") login: String
-    ): Response<GithubUserDetail?>
+    ): Response<GithubUserDetailDto?>
 }
