@@ -14,6 +14,10 @@ object Base {
     const val PERMISSION_WARNING_MESSAGE = "This application can't post or receive notifications without Notification permission"
 }
 
+object RegexUtils {
+    const val SEARCH_TEXT_REGEX = "[^a-zA-Z0-9\\s]"
+}
+
 object UserDetailListItemKey {
     const val BIO = "BIO"
     const val EMAIL = "EMAIL"

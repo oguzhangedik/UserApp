@@ -3,6 +3,7 @@ package com.example.userapp.core.extensions
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.userapp.core.base.viewmodel.Event
 
 fun <T> LifecycleOwner.observe(liveData: LiveData<T>, observer: (T) -> Unit) {
     liveData.observe(

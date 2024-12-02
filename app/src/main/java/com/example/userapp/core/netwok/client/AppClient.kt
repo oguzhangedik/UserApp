@@ -1,10 +1,10 @@
 package com.example.userapp.core.netwok.client
 
-import com.example.userapp.core.data.dto.user.GithubUserDetailDto
-import com.example.userapp.core.data.dto.user.GithubUserDetailRequest
-import com.example.userapp.core.data.dto.user.GithubUserSearchDto
-import com.example.userapp.core.data.dto.user.GithubUserSearchRequest
-import com.example.userapp.core.data.remote.AppService
+import com.example.userapp.data.dto.userdetail.GithubUserDetailDto
+import com.example.userapp.data.dto.userdetail.GithubUserDetailRequest
+import com.example.userapp.data.dto.usersearch.GithubUserSearchDto
+import com.example.userapp.data.dto.usersearch.GithubUserSearchRequest
+import com.example.userapp.data.remote.AppService
 
 
 import retrofit2.Response

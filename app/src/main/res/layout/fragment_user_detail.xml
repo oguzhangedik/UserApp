@@ -6,7 +6,7 @@
     <data>
         <variable
             name="fragment"
-            type="com.example.userapp.ui.userdetail.presenter.UserDetailFragment" />
+            type="com.example.userapp.presentation.fragment.userdetail.presenter.UserDetailFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

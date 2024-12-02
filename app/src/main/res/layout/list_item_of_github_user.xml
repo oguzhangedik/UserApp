@@ -6,11 +6,11 @@
     <data>
         <variable
             name="data"
-            type="com.example.userapp.core.data.dto.user.GithubUser" />
+            type="com.example.userapp.domain.model.GithubUser" />
 
         <variable
             name="listener"
-            type="com.example.userapp.core.data.dto.user.GithubUserItemClickListener" />
+            type="com.example.userapp.domain.model.GithubUserItemClickListener" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout

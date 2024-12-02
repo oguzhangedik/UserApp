@@ -6,11 +6,11 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.userapp.ui.usersearch.presenter.UserSearchViewModel" />
+            type="com.example.userapp.presentation.fragment.usersearch.presenter.UserSearchViewModel" />
 
         <variable
             name="fragment"
-            type="com.example.userapp.ui.usersearch.presenter.UserSearchFragment" />
+            type="com.example.userapp.presentation.fragment.usersearch.presenter.UserSearchFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
