@@ -13,16 +13,17 @@ You can display details such as the bio, blog, location and company of the user 
 - [Kotlin](https://kotlinlang.org/docs/home.html)
     - [Flow](https://developer.android.com/kotlin/flow)
     - [Coroutines](https://developer.android.com/kotlin/coroutines)
-- [Jetpack Components](https://developer.android.com/jetpack)K
+- [Jetpack Components](https://developer.android.com/jetpack)
+    - [LiveData](https://developer.android.com/reference/android/arch/lifecycle/LiveData)
     - [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
-    - [Navigation](https://developer.android.com/guide/navigation/navigation-getting-started)
+    - [Navigation Component](https://developer.android.com/guide/navigation/navigation-getting-started)
     - [Hilt](https://developer.android.com/training/dependency-injection)
+    - [Room](https://developer.android.com/jetpack/androidx/releases/room)
     - [Data Binding](https://developer.android.com/topic/libraries/data-binding)
+    - [View Binding](https://developer.android.com/topic/libraries/view-binding)
 - [Retrofit](https://square.github.io/retrofit)
 - [OkHttp](https://github.com/square/okhttp)
-- [Keyboard Visibility Event](https://github.com/yshrsmz/KeyboardVisibilityEvent)
 - [Glide](https://github.com/bumptech/glide)
-- [Material Design](https://material.io/develop/android/docs/getting-started)
 
 
 ## Screenshots 📱
