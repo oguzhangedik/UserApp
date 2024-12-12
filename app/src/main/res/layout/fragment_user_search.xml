@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.userapp.presentation.fragment.usersearch.presenter.UserSearchViewModel" />
+
+        <variable
+            name="fragment"
+            type="com.example.userapp.presentation.fragment.usersearch.presenter.UserSearchFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/searchEditTextLayout"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_layout_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingHorizontal="@dimen/_16dp"
+            android:paddingVertical="@dimen/_24dp"
+            android:layout_margin="@dimen/_2dp">
+
+            <EditText
+                android:id="@+id/searchEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_bg"
+                android:minHeight="@dimen/_44dp"
+                android:imeOptions="actionDone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="@dimen/_18sp"
+                android:textColor="@color/black"
+                android:maxLength="30"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:padding="@dimen/_14dp"
+                android:hint="@string/search_user"
+                android:textColorHint="@color/dark_gray"
+                android:inputType="text"
+                android:text="@{viewModel.userSearchViewState.searchText}" />
+
+            <ImageView
+                android:id="@+id/refreshImageView"
+                android:layout_width="@dimen/_24dp"
+                android:layout_height="@dimen/_24dp"
+                app:layout_constraintEnd_toEndOf="@+id/searchEditText"
+                app:layout_constraintTop_toTopOf="@+id/searchEditText"
+                app:layout_constraintBottom_toBottomOf="@+id/searchEditText"
+                android:layout_marginEnd="@dimen/_16dp"
+                android:src="@drawable/refresh_icon"
+                tools:visibility="visible"
+                android:visibility="gone"
+                android:onClick="@{(view) -> fragment.onRefreshButtonClicked(view) }"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/githubUserRecyclerView"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="@dimen/_0dp"
+            android:layout_marginHorizontal="@dimen/_8dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchEditTextLayout"
+            tools:listitem="@layout/list_item_of_github_user" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

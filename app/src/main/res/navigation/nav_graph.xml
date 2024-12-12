@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/searchUserFragment">
+
+    <fragment
+        android:id="@+id/searchUserFragment"
+        android:name="com.example.userapp.presentation.fragment.usersearch.presenter.UserSearchFragment"
+        tools:layout="@layout/fragment_user_search">
+
+        <action
+            android:id="@+id/action_searchUserFragment_to_userDetailFragment"
+            app:destination="@id/userDetailFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/userDetailFragment"
+        android:name="com.example.userapp.presentation.fragment.userdetail.presenter.UserDetailFragment"
+        tools:layout="@layout/fragment_user_detail">
+
+        <argument
+            android:name="githubUser"
+            app:argType="com.example.userapp.domain.model.GithubUser"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+
+    </fragment>
+
+</navigation>

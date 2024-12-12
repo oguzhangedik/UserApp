@@ -85,15 +85,14 @@ object Dependencies {
             "io.logto.sdk:android:1.0.0-alpha.0"
         }
     }
-    object Revenue {
-        val revenuecat by lazy {
-            "com.revenuecat.purchases:purchases:5.4.0"
-        }
-    }
+
     object Room {
 
         val runtime by lazy {
             "androidx.room:room-runtime:${Versions.Room.room}"
+        }
+        val ktx by lazy {
+            "androidx.room:room-ktx:${Versions.Room.room}"
         }
         val compiler by lazy {
             "androidx.room:room-compiler:${Versions.Room.room}"
@@ -187,14 +186,6 @@ object Dependencies {
             "com.auth0.android:jwtdecode:2.0.0"
         }
     }
-    object Google {
-        const val playSevicesMap =
-            "com.google.android.gms:play-services-maps:${Versions.Google.playServicesMaps}"
-        const val googleLocation =
-            "com.google.android.gms:play-services-location:${Versions.Google.location}"
-        const val mapUtils =
-            "com.google.maps.android:android-maps-utils:${Versions.Google.mapUtils}"
-    }
 
     object Dialogs {
         val dialogCore by lazy {
@@ -202,38 +193,6 @@ object Dependencies {
         }
         val dateTime by lazy {
             "com.afollestad.material-dialogs:datetime:${Versions.Dialogs.core}"
-        }
-    }
-    object Firebase {
-        val firebaseBom by lazy {
-            "com.google.firebase:firebase-bom:${Versions.GoogleFirebase.firebaseBom}"
-        }
-        val firebaseCrashlytics by lazy {
-            "com.google.firebase:firebase-crashlytics:${Versions.GoogleFirebase.firebaseCrashlytics}"
-        }
-        val firebaseAnalitics by lazy {
-            "com.google.firebase:firebase-analytics:${Versions.GoogleFirebase.firebaseAnalytics}"
-        }
-        val firebaseConfig by lazy {
-            "com.google.firebase:firebase-config-ktx:${Versions.GoogleFirebase.firebaseConfig}"
-        }
-        val firebaseMessage by lazy {
-            "com.google.firebase:firebase-messaging:${Versions.GoogleFirebase.firebaseMessage}"
-        }
-    }
-
-    object Adjust {
-        val adjustSdk by lazy {
-            "com.adjust.sdk:adjust-android:${Versions.AdjustSdk.adjust}"
-        }
-        val installReferrer by lazy {
-            "com.android.installreferrer:installreferrer:${Versions.AdjustSdk.installreferrer}"
-        }
-    }
-
-    object Facebook {
-        val facebook by lazy {
-            "com.facebook.android:facebook-login:${Versions.Facebook.login}"
         }
     }
 

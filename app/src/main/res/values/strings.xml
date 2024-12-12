@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">User App</string>
+    <!-- ProcessDialog -->
+    <string name="loading">Loading</string>
+    <string name="progressDialog_title">@string/app_name</string>
+    <!-- Dialogs-->
+    <string name="ok_text">OK</string>
+    <string name="cancel_text">Cancel</string>
+    <!-- User Search-->
+    <string name="search_user">Search User</string>
+    <!-- User Detail-->
+    <string name="repositories">Repositories</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
 </resources>

@@ -9,8 +9,6 @@ object Classpaths {
         "org.jetbrains.kotlin:kotlin-serialization:${Versions.Kotlin.kotlinVersion}"
     const val hiltGradlePlugin =
         "com.google.dagger:hilt-android-gradle-plugin:${Versions.Gradle.hiltVersion}"
-   const val googleServices =
-        "com.google.gms:google-services:${Versions.GoogleFirebase.googleServices}"
     const val crashlytics =
         "com.google.firebase:firebase-crashlytics-gradle:${Versions.GoogleFirebase.firebaseCrashPlugin}"
 }

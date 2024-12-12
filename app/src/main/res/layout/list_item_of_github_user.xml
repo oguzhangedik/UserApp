@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="data"
+            type="com.example.userapp.domain.model.GithubUser" />
+
+        <variable
+            name="listener"
+            type="com.example.userapp.domain.model.GithubUserItemClickListener" />
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/githubUserLayout"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_80dp"
+    android:background="@drawable/user_list_item_layout_bg"
+    android:layout_marginTop="@dimen/_8dp"
+    android:onClick="@{(view) -> listener.onUserClicked(view, userImageView, data)}">
+
+    <ImageView
+        android:id="@+id/userImageView"
+        android:layout_width="@dimen/_60dp"
+        android:layout_height="@dimen/_60dp"
+        android:contentDescription="@null"
+        app:roundImageUrl="@{data.avatarUrl}"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        tools:background="@color/red"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="@dimen/_16dp"/>
+
+    <TextView
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/userImageView"
+        app:layout_constraintEnd_toStartOf="@+id/favoriteImageView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginHorizontal="@dimen/_4dp"
+        android:textColor="@color/white"
+        android:gravity="center"
+        tools:text="User Name"
+        android:textStyle="bold"
+        android:textSize="@dimen/_20sp"
+        android:text="@{data.login}"/>
+
+    <ImageView
+        android:id="@+id/favoriteImageView"
+        android:layout_width="@dimen/_34dp"
+        android:layout_height="@dimen/_34dp"
+        app:layout_constraintEnd_toStartOf="@+id/arrowImageView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="@dimen/_8dp"
+        tools:src="@drawable/favorite_icon"
+        setUserListItemFavoriteImage="@{data}"
+        android:onClick="@{(view) -> listener.onUserFavoriteButtonClicked(githubUserLayout, view, data)}"/>
+
+    <ImageView
+        android:id="@+id/arrowImageView"
+        android:layout_width="@dimen/_24dp"
+        android:layout_height="@dimen/_24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="@dimen/_8dp"
+        android:src="@drawable/next_icon" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

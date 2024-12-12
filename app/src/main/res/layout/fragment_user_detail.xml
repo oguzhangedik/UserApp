@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="fragment"
+            type="com.example.userapp.presentation.fragment.userdetail.presenter.UserDetailFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/user_detail_list_bg">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/githubUserDetailRecyclerView"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="@dimen/_0dp"
+            android:layout_marginHorizontal="@dimen/_8dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/list_item_of_github_user_detail" />
+
+        <ImageView
+            android:id="@+id/backImageView"
+            android:layout_width="@dimen/_30dp"
+            android:layout_height="@dimen/_30dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/_16dp"
+            android:layout_marginStart="@dimen/_16dp"
+            android:src="@drawable/back_icon"
+            android:onClick="@{(view) -> fragment.onBackButtonClicked(view) }"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

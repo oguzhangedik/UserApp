@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.example.userapp.domain.model.UserDetailListItem" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/_8dp">
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Email"
+            android:text="@{data.title}"
+            android:textSize="@dimen/_18sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/_12dp"/>
+
+        <TextView
+            android:id="@+id/descriptionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/titleTextView"
+            app:layout_constraintTop_toBottomOf="@+id/titleTextView"
+            tools:text="samplemail@samplemail.com"
+            android:text="@{data.description}"
+            android:textSize="@dimen/_14sp"
+            android:textColor="@color/dark_gray"
+            android:layout_marginTop="@dimen/_4dp"/>
+
+        <View
+            android:id="@+id/lineView"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="@dimen/_1dp"
+            android:background="@color/dark_gray"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionTextView"
+            android:layout_marginTop="@dimen/_8dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -25,12 +25,16 @@ android {
     }
 
     buildTypes {
+        debug {
+            stringField(Fields.API_BASE_URL to "https://api.github.com/")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            stringField(Fields.API_BASE_URL to "https://api.github.com/")
         }
     }
     compileOptions {
@@ -39,6 +43,11 @@ android {
     }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
+    }
+    buildFeatures {
+        dataBinding = true
+        viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -126,6 +135,7 @@ dependencies {
 
     // Room
     implementation(Dependencies.Room.runtime)
+    implementation(Dependencies.Room.ktx)
     kapt(Dependencies.Room.compiler)
 
     // Paging
@@ -148,4 +158,12 @@ dependencies {
     implementation(Dependencies.ViewPager.viewPager)
     implementation(Dependencies.ViewPager.viewPagerIndicator)
 
+}
+
+fun com.android.build.api.dsl.ApplicationBuildType.stringField(entry: Pair<String, String>) {
+    buildConfigField("String", entry.first, "\"${entry.second}\"")
+}
+
+object Fields {
+    const val API_BASE_URL = "API_BASE_URL"
 }

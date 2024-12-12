@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="data"
+            type="com.example.userapp.domain.model.UserDetailHeaderItem" />
+
+        <variable
+            name="listener"
+            type="com.example.userapp.domain.model.GithubUserDetailItemClickListener" />
+
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/userImageView"
+        android:layout_width="@dimen/_100dp"
+        android:layout_height="@dimen/_100dp"
+        android:contentDescription="@null"
+        app:roundImageUrl="@{data.avatarUrl}"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        tools:background="@color/red"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/_48dp"/>
+
+    <TextView
+        android:id="@+id/userNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        tools:text="Sample Name"
+        android:text="@{data.name}"
+        android:textSize="@dimen/_30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userImageView"
+        android:layout_marginTop="@dimen/_12dp"/>
+
+    <TextView
+        android:id="@+id/userCompanyTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="\@sampleCompany"
+        android:text="@{data.company}"
+        android:textColor="@color/dark_gray"
+        android:textSize="@dimen/_14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userNameTextView"/>
+
+    <ImageView
+        android:id="@+id/userFavoriteImageView"
+        android:layout_width="@dimen/_40dp"
+        android:layout_height="@dimen/_40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userCompanyTextView"
+        android:layout_marginTop="@dimen/_8dp"
+        tools:src="@drawable/favorite_icon"
+        setUserDetailHeaderItemFavoriteImage="@{data}"
+        android:onClick="@{(view) -> listener.onUserFavoriteButtonClicked(view, data)}"/>
+
+    <TextView
+        android:id="@+id/repoCountTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="53"
+        android:text="@{data.publicRepos}"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="@dimen/_24sp"
+        android:layout_marginTop="@dimen/_12dp"
+        android:includeFontPadding="false"
+        app:layout_constraintTop_toBottomOf="@+id/userFavoriteImageView"
+        app:layout_constraintStart_toStartOf="@+id/repoTitleTextView"
+        app:layout_constraintEnd_toEndOf="@+id/repoTitleTextView"/>
+
+    <TextView
+        android:id="@+id/followerCountTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="188"
+        android:text="@{data.followers}"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="@dimen/_24sp"
+        android:layout_marginTop="@dimen/_12dp"
+        android:includeFontPadding="false"
+        app:layout_constraintTop_toBottomOf="@+id/userFavoriteImageView"
+        app:layout_constraintStart_toStartOf="@+id/followerTitleTextView"
+        app:layout_constraintEnd_toEndOf="@+id/followerTitleTextView"/>
+
+    <TextView
+        android:id="@+id/followingCountTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="18"
+        android:text="@{data.following}"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="@dimen/_24sp"
+        android:layout_marginTop="@dimen/_12dp"
+        android:includeFontPadding="false"
+        app:layout_constraintTop_toBottomOf="@+id/userFavoriteImageView"
+        app:layout_constraintStart_toStartOf="@+id/followingTitleTextView"
+        app:layout_constraintEnd_toEndOf="@+id/followingTitleTextView"/>
+
+    <TextView
+        android:id="@+id/repoTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/repositories"
+        android:textColor="@color/dark_gray"
+        android:textSize="@dimen/_14sp"
+        android:layout_marginTop="@dimen/_2dp"
+        android:includeFontPadding="false"
+        app:layout_constraintTop_toBottomOf="@+id/repoCountTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/followerCountTextView"/>
+
+    <TextView
+        android:id="@+id/followerTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/followers"
+        android:textColor="@color/dark_gray"
+        android:textSize="@dimen/_14sp"
+        android:layout_marginTop="@dimen/_2dp"
+        android:includeFontPadding="false"
+        app:layout_constraintTop_toBottomOf="@+id/followerCountTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/followingTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/following"
+        android:textColor="@color/dark_gray"
+        android:textSize="@dimen/_14sp"
+        android:layout_marginTop="@dimen/_2dp"
+        android:includeFontPadding="false"
+        app:layout_constraintTop_toBottomOf="@+id/followingCountTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/followerCountTextView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
